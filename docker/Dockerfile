@@ -48,35 +48,5 @@ RUN apt-get -qq update \
         liblua5.2-dev \
         ros-noetic-smach* 
 
-# Build OpenCV
-ENV OPENCV_VERSION="4.5.1"
-
-RUN wget -q https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip -O opencv.zip \
-    && unzip -qq opencv.zip -d /opt \
-    && rm -rf opencv.zip \
-    && cmake \
-        -D BUILD_TIFF=ON \
-        -D BUILD_opencv_java=OFF \
-        -D WITH_CUDA=OFF \
-        -D WITH_OPENGL=OFF \
-        -D WITH_OPENCL=OFF \
-        -D WITH_IPP=OFF \
-        -D WITH_TBB=ON \
-        -D WITH_EIGEN=ON \
-        -D WITH_V4L=ON \
-        -D BUILD_TESTS=OFF \
-        -D BUILD_PERF_TESTS=OFF \
-        -D CMAKE_BUILD_TYPE=RELEASE \
-      	-D CMAKE_BUILD_TYPE=RELEASE \
-        -D OPENCV_GENERATE_PKGCONFIG=ON \
-        -D OPENCV_PC_FILE_NAME=opencv.pc \
-       /opt/opencv-${OPENCV_VERSION} \
-    && make -j$(nproc) install \
-    && rm -rf /opt/build/* \
-    && rm -rf /opt/opencv-${OPENCV_VERSION} \
-    && rm -rf /var/lib/apt/lists/* \
-    && apt-get -qq autoremove \
-    && apt-get -qq clean
-
 RUN mkdir /home/l3x
 WORKDIR /home/l3x
