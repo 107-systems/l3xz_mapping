@@ -1,8 +1,0 @@
-prefix=/home/l3xz/host_ws/install
-
-Name: l3xz_mapping
-Description: Description of l3xz_mapping
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: nav_msgs std_msgs tf sensor_msgs
