@@ -1,0 +1,39 @@
+<launch>
+    <include file="$(find l3xz_mapping)/launch/transformers.launch">
+    </include>
+
+    <node pkg="l3xz_mapping" type="transform_odom.py" name="odom_slam" output="screen">
+    </node>
+	
+    <include file="$(find l3xz_mapping)/launch/rtabmap_base.launch">
+        <arg name="rtabmap_args" value="
+        --delete_db_on_start
+        --Odom/Strategy 1
+        --Odom/EstimationType 0
+        --Odom/MinInliers 1
+        --Odom/RoiRatios 0.03 0.03 0.04 0.04
+        --Odom/MaxDepth 20
+        --OdomBow/NNDR 0.8
+        --GFTT/QualityLevel 0.00001
+        --Vis/MaxFeatures 1000
+        --Grid/MaxGroundAngle 90 
+        --GFTT/MinDistance 10
+        --Grid/CellSize 0.05
+        --RGBD/ProximityBySpace 1
+	--Rtabmap/DetectionRate 1       
+	"/>
+        <arg name="visualodom_topic" value="/rtabmap/odom"/>
+        <arg name="visual_odometry" value="true"/>
+        <arg name="rgb_topic" value="/camera/color/image_raw"/>
+        <arg name="depth_topic" value="/camera/aligned_depth_to_color/image_raw"/>
+        <!--arg name="rgb_topic" value="/camera/infra1/image_rect_raw"/>
+        <arg name="depth_topic" value="/camera/depth/image_rect_raw"/-->
+        <arg name="camera_info_topic" value="/camera/aligned_depth_to_color/camera_info"/>
+        <arg name="rtabmapviz" value="false"/>
+        <arg name="rviz" value="false"/>
+        <arg name="wait_for_transform" value="1.0"/>
+        <arg name="subscribe_scan" value="true"/>
+        <arg name="scan_topic" value="/l3xz/laser_link"/>
+        <arg name="queue_size" value="100"/>
+    </include>
+</launch>

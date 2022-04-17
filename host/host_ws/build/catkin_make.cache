@@ -1,0 +1,2 @@
+l3xz_mapping
+-DCATKIN_DEVEL_PREFIX=/home/l3xz/host_ws/devel -DCMAKE_INSTALL_PREFIX=/home/l3xz/host_ws/install -G Unix Makefiles
