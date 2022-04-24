@@ -7,7 +7,7 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 
 # Setup
 
-## Part 1 (the basestation part)
+## Part 1 (the base station part)
 Clone the repository and go to host root:
 ~~~bash
 git@github.com:107-systems/l3xz-mapping.git
