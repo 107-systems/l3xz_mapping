@@ -11,6 +11,8 @@ tmux split-window -h
 tmux selectp -t 0
 tmux split-window -h
 
+tmux setw -g mouse on
+
 tmux_send_all() {
 	for _pane in $(tmux list-panes -F '#P'); do
 		tmux send-keys -t ${_pane} "$@"
