@@ -46,3 +46,4 @@ After both parts are online, the mapping can be started on the base station:
 roslaunch l3xz_mapping l3xz_mapping.launch
 ~~~
 The data can be viewed via rviz or the dashboard at ```http://localhost:8000```. The robot/ software can also be operated via the dashboard (TBD).
+![elrob dashboard](doc/img/dashboard.png)

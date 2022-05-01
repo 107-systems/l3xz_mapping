@@ -17,6 +17,7 @@ class Visualizer
         this.originY = 0;
         this.resolution = 1.0;
         this.lastGrid = null;
+        this.odomData = null;
 
         this.track = null;
         this.posGPS = null;
@@ -65,8 +66,6 @@ class Visualizer
     show(name, type, message)
     {
         this.setCanvas();
-        console.log(type);
-        console.log(message);
         switch(type)
         {
             case "sensor_msgs/LaserScan": this.showLaserScan(name, type, message); break;
@@ -704,21 +703,21 @@ class Visualizer
       this.lastGrid = message;
       this.showCanvas(true);
       this.clearCanvas(true);
-      var width = message.info.width;
-      var height = message.info.height;
+      var width = this.width;
+      var height = this.height;
       var arr = message.data;
 
-    var facX = 1;
-    var facY = 1;
-    if(height > this.height)
+    if(height > this.height || width > this.width)
     {
-      this.canvas.height = height;
-      var facY = this.height / height;
+      if(this.odom)
+      {
+
+      }
     }
-    if(width > this.width)
+    else
     {
-      this.canvas.width = width;
-      var facX = this.width / width;
+      width = message.info.width;
+      height = message.info.height;
     }
 
     var img = this.context.getImageData(0, 0, width, height);
@@ -750,9 +749,6 @@ class Visualizer
     
     this.context.putImageData(img, 0, 0);
     
-    var scale = Math.min(facX, facY);
-//    this.context.scale(scale, scale);
-
     this.originX = parseFloat(pose.position.x).toFixed(2);
     this.originY = parseFloat(pose.position.y).toFixed(2);
     this.resolution = parseFloat(message.info.resolution).toFixed(2);
@@ -767,6 +763,7 @@ class Visualizer
   showOdomInGrid(name, type, message)
   {
     this.showGrid("/rtabmap/grid_map", "nav_msgs/OccupancyGrid", this.lastGrid);
+    this.odomData = message;
     let x = message.pose.pose.position.x / this.resolution;
     let y = message.pose.pose.position.y / this.resolution;
     let q = message.pose.pose.orientation;

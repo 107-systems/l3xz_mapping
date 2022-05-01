@@ -26,30 +26,39 @@ function init()
 {
 //    autoscale();
     getTopics(topicsManager);
-    window.onresize = autoscale;
+//    window.onresize = autoscale;
     document.addEventListener('DOMContentLoaded', init, false);	
     prepareJoydrive(true);
 }
 
-function initDash()
+var vis1;
+var vis2;
+var vis3;
+var vis4;
+var vis5;
+function initElrob()
 {
-          var vis1 = new Visualizer("div_road", "canvas_road");
+          vis1 = new Visualizer("div_road", "canvas_screen1");
           var topicsManager1 = new TopicsManager(vis1, false);
-          var vis2 = new Visualizer("div_filter", "canvas_filter");
+          vis2 = new Visualizer("div_filter", "canvas_screen2");
           var topicsManager2 = new TopicsManager(vis2, false);
-          var vis3 = new Visualizer("div_global", "canvas_global");
+          vis3 = new Visualizer("div_global", "canvas_screen3");
           var topicsManager3 = new TopicsManager(vis3, false);
-          var vis4 = new Visualizer("div_local", "canvas_local");
+          vis4 = new Visualizer("div_local", "canvas_screen4");
           var topicsManager4 = new TopicsManager(vis4, false);
+          vis5 = new Visualizer("div_local", "canvas_screen5");
+          var topicsManager5 = new TopicsManager(vis5, false);
           getTopics(topicsManager1);
           getTopics(topicsManager2);
           getTopics(topicsManager3);
           getTopics(topicsManager4);
+          getTopics(topicsManager5);
          
           var subscribed1 = [];
           var subscribed2 = [];
           var subscribed3 = [];
           var subscribed4 = [];
+          var subscribed5 = [];
           
           function init(){setTimeout(function(){
           var topics = topicsManager1.getAllTopicDescriptions();
@@ -58,27 +67,25 @@ function initDash()
                     for (k in current) {
                       var topic = current[k];
                       console.log(topic);
-                      if("/road_detector/roaddetector/way/compressed" == topic[1])
+                      if("/l3xz/openmv_thermal/image_color_compressed" == topic[1])
                       {
                         subscribed1.push(topic[0]);
                       }
-                      if("/road_detector/roaddetector/filter/compressed" == topic[1])
+                      if("/l3xz/openmv_rgb/image_color_compressed" == topic[1])
                       {
                         subscribed2.push(topic[0]);
                       }
-//                      if("/road_detector/road_lidar" == topic[1])
-                      if("/grid_planner/planner/out/compressed" == topic[1])
+                      if("/camera/depth/image_rect_raw/compressed" == topic[1])
+                      {
+                        subscribed3.push(topic[0]);
+                      }
+                      if("/camera/color/image_raw/compressed" == topic[1])
                       {
                         subscribed4.push(topic[0]);
                       }
-                      if(/*"/gps_data"*/"/ublox_gps/fix" == topic[1])
+                      if("/rtabmap/grid_map" == topic[1] || "/odom_slam" == topic[1])
                       {
-                        subscribed3.push(topic[0]);
-                      }
-                      if("/route" == topic[1])
-//                      if("/road_detector/roaddetector/out/compressed" == topic[1])
-                      {
-                        subscribed3.push(topic[0]);
+                        subscribed5.push(topic[0]);
                       }
                    }
                    }
@@ -86,7 +93,8 @@ function initDash()
                    topicsManager2.subscribeTopics(subscribed2);
                    topicsManager3.subscribeTopics(subscribed3);
                    topicsManager4.subscribeTopics(subscribed4);
-                   vis3.enableTrack(true);
+                   topicsManager5.subscribeTopics(subscribed5);
+                   vis5.enableMap(true);
         window.onresize = autoscale2 }, 2000)}
         document.addEventListener('DOMContentLoaded', init, false);
 }
