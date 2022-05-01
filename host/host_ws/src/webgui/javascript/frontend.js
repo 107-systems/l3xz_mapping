@@ -1,30 +1,11 @@
+var mapShow = 0;
+var trackShow = 0;
+
 function select_topic_onchange() {
     var selected = document.getElementById("select_topic").value;
  
     visualizer.setCanvas();
-    if(odomShow == selected)
-    {
-      topics = topicsManager.getAllTopicDescriptions();
-      visualizer.clearCanvas();
-      var subscribed = []
-      for (i in topics) 
-      {
-        var current = topics[i];
-
-        for (k in current) {
-            var topic = current[k];
-            if("/odom_wheel" == topic[1] || "/rtabmap/odom" == topic[1])
-            {
-              subscribed.push(topic[0])
-            }
-        }
-      }
-      topicsManager.subscribeTopics(subscribed);
-      visualizer.enableOdometry(true);
-      visualizer.enableMap(false);
-      visualizer.enableTrack(false);
-    }
-    else if(mapShow == selected)
+    if(mapShow == selected)
     {
       topics = topicsManager.getAllTopicDescriptions();
       visualizer.clearCanvas();
@@ -42,7 +23,6 @@ function select_topic_onchange() {
         }
       }
       topicsManager.subscribeTopics(subscribed);
-      visualizer.enableOdometry(false);
       visualizer.enableMap(true);
       visualizer.enableTrack(false);
     }
@@ -64,13 +44,11 @@ function select_topic_onchange() {
         }
       }
       topicsManager.subscribeTopics(subscribed);
-      visualizer.enableOdometry(false);
       visualizer.enableMap(false);
       visualizer.enableTrack(true);
     }
     else
     {
-      visualizer.enableOdometry(false);
       visualizer.enableMap(false);
       visualizer.enableTrack(false);
       topicsManager.subscribeTopic(selected);
@@ -101,12 +79,6 @@ function select_topic_refresh() {
         $optgroup.appendTo($select);
     }
     var $optgroup = $("<optgroup label = 'special'>");
-    value = value + 1;
-    var opt = "<option value=" + value + ">odometry compare</option>";
-    odomShow = value;
-    $optgroup.append(opt);
-    value = value + 1;
-    var opt = "<option value=" + value + ">map</option>";
     mapShow = value;
     $optgroup.append(opt);
     $optgroup.appendTo($select);
