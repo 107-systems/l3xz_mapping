@@ -23,7 +23,6 @@ docker run \
         --volume="$XAUTH:$XAUTH" \
         -it --cidfile dockerid.id \
         -v ${PWD}:/home/l3xz \
-        -p 11311:11311 \
-        -p 8000:8000 \
-        -p 9090:9090 \
+        --network host \
+        --cap-add SYS_TIME \
         l3xz_mapping /bin/bash

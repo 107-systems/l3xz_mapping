@@ -1,68 +1,67 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
 #div_road
 {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    overflow-x: "scroll";
-    overflow-y: "scroll";
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  overflow-x: "scroll";
+  overflow-y: "scroll";
 }
 
 #canvas_road 
 {
-	position: absolute;
-    top: 0px;
-    left: 0px;
+  position: relative;
 	border: 5px solid red;
 }
 
 #div_filter
 {
-    position: absolute;
-    top: 450px;
-    left: 25px;
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
     overflow-x: "scroll";
     overflow-y: "scroll";
 }
 
 #canvas_filter 
 {
-	position: absolute;
-  top: 0px;
-  left: 0px;
+  position: relative;
 	border: 5px solid red;
 }
 
 #div_global
 {
-    position: absolute;
-    top: 25px;
-    left: 650px;
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
     overflow-x: "scroll";
     overflow-y: "scroll";
 }
 
 #canvas_global
 {
-	position: absolute;
-    top: 0px;
-    left: 0px;
+  position: relative;
 	border: 5px solid red;
 }
 
 #div_local
 {
-    position: absolute;
-    top: 450px;
-    left: 650px;
+  position: relative;
+  grid-column: 2;
+  grid-row: 1;
     overflow-x: "scroll";
     overflow-y: "scroll";
 }
 
 #canvas_local 
 {
-	position: absolute;
-    top: 0px;
-    left: 0px;
+  position: relative;
 	border: 5px solid red;
 }
 

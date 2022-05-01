@@ -1,7 +1,4 @@
 <launch>
-    <include file="$(find l3xz_mapping)/launch/transformers.launch">
-    </include>
-
     <include file="$(find l3xz_mapping)/launch/rtabmap_base.launch">
         <arg name="rtabmap_args" value="
         --delete_db_on_start

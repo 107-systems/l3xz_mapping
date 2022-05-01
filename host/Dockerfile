@@ -47,10 +47,15 @@ RUN apt-get -qq update \
         libboost-all-dev \
         lua5.2 \
         liblua5.2-dev \
-        ros-noetic-smach* 
+        ros-noetic-smach* \
+        chrony
+
+COPY ./chrony.conf /etc/chrony
+
+COPY ./entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 RUN mkdir /home/l3xz
 WORKDIR /home/l3xz
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
