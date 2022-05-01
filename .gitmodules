@@ -7,3 +7,6 @@
 [submodule "client/client_ws/src/l3xz_sweep_scanner"]
 	path = client/client_ws/src/l3xz_sweep_scanner
 	url = git@github.com:107-systems/l3xz_sweep_scanner.git
+[submodule "host/host_ws/src/l3xz_openmv_camera"]
+	path = host/host_ws/src/l3xz_openmv_camera
+	url = git@github.com:107-systems/l3xz_openmv_camera.git

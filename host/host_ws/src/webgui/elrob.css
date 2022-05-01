@@ -12,6 +12,12 @@ body
     overflow-y: hidden;*/
 }
 
+.css_checkbox
+{
+  border-radius:10px;
+  background-color: whitesmoke;
+}
+
 .css_squarebutton
 {
     height: 80px;
@@ -234,5 +240,12 @@ body
 {
     position: absolute;
     top: 25px;
+    left: 0px;
+}
+
+#lighting
+{
+    position: relative;
+    top: 75px;
     left: 0px;
 }
