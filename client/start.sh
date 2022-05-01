@@ -17,8 +17,13 @@ tmux_send_all() {
 	done
 }
 
+sudo /etc/init.d/chrony stop
+sudo echo "server $(cat client_ip.conf) iburst prefer" >> /etc/chrony/chrony.conf
+sudo /etc/init.d/chrony start
+
 #tmux_send_all "export ROS_IP=$(cat master_ip.conf)" C-m
 tmux_send_all "export ROS_MASTER_URI=http://$(cat master_ip.conf):11311" C-m
+tmux_send_all "export ROS_IP=$(cat client_ip.conf)" C-m
 tmux_send_all "source /opt/ros/noetic/setup.bash" C-m
 tmux selectp -t 0
 tmux send-keys "cd .." C-m
