@@ -9,17 +9,22 @@ find_package(catkin REQUIRED COMPONENTS
 	sensor_msgs
   geometry_msgs
 	rospy
+  message_generation
 )
 
 add_message_files(
   FILES
-  waypoint.msg
-  track.msg
+  Waypoint.msg
+  Track.msg
+)
+add_service_files(
+  FILES
+  SetWaypoint.srv
 )
 
 generate_messages(
-   DEPENDENCIES
-   std_msgs
+  DEPENDENCIES
+  std_msgs
   geometry_msgs
 )
 
@@ -32,6 +37,8 @@ include_directories(
 
 catkin_install_python(PROGRAMS
    scripts/transform_odom.py
+   scripts/recorder.py
+   scripts/dummy_caller.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
