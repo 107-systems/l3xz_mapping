@@ -7,7 +7,20 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	tf
 	sensor_msgs
+  geometry_msgs
 	rospy
+)
+
+add_message_files(
+  FILES
+  waypoint.msg
+  track.msg
+)
+
+generate_messages(
+   DEPENDENCIES
+   std_msgs
+  geometry_msgs
 )
 
 catkin_package(
