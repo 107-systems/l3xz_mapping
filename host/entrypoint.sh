@@ -40,11 +40,11 @@ tmux send-keys "cd /home/l3xz/host_ws/src/webgui" C-m
 tmux send-keys "python3 -m http.server 8000" C-m
 
 tmux selectp -t 2
-tmux send-keys "cd /home/l3xz" C-m
+tmux send-keys "cd /home/l3xz/host_ws/src/l3xz_mapping/scripts" C-m
 tmux send-keys "/etc/init.d/chrony status" C-m
 
 tmux selectp -t 3
-tmux send-keys "cd /home/l3xz" C-m
+tmux send-keys "cd /home/l3xz/host_ws/src/l3xz_mapping/scripts" C-m
 
 tmux new-window -t $session:1 -n scratch
 tmux select-window -t $session:0

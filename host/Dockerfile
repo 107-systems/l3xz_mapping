@@ -48,10 +48,13 @@ RUN apt-get -qq update \
         lua5.2 \
         liblua5.2-dev \
         ros-noetic-smach* \
-        chrony
+        chrony \
+        python3-pip
 
 COPY ./chrony.conf /etc/chrony
 
+RUN pip3 install geopy
+RUN pip3 install utm
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

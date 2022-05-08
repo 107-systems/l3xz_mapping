@@ -15,11 +15,13 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   Waypoint.msg
+  Startpoint.msg
   Track.msg
 )
 add_service_files(
   FILES
   SetWaypoint.srv
+  SetStartpoint.srv
 )
 
 generate_messages(
@@ -33,6 +35,7 @@ catkin_package(
 )
 
 include_directories(
+  $(catkin_INCLUDE_DIRS)
 )
 
 catkin_install_python(PROGRAMS
