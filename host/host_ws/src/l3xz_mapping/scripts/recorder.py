@@ -13,20 +13,24 @@ from l3xz_mapping.msg import Startpoint, Waypoint, Track
 from l3xz_mapping.srv import SetWaypoint, SetWaypointResponse, SetStartpoint, SetStartpointResponse
 
 from geo import GeoPoint
+from logger import Logger
 
-mutex = threading.Lock() # Mutex for asynchronous services and publishing.
+mutex = threading.Lock()
 
 startposition = None
 startpoint = None
+logger = None
 
 def set_waypoint_callback(request):
   global startposition
   global startpoint
+  global logger
   global mutex
   mutex.acquire()
   success = True 
   if startpoint is not None and startposition is not None:
-    print(startpoint.point_from_delta(request.waypoint.position.x - startposition.x, request.waypoint.position.y - startposition.y))
+    logpoint = startpoint.point_from_delta(request.waypoint.position.x - startposition.x, request.waypoint.position.y - startposition.y)
+    logger.log(request.waypoint.header.stamp.secs, request.waypoint.header.stamp.nsecs * 1000, logpoint.utm_zone, logpoint.utm_easting, logpoint.utm_northing) 
   mutex.release()
   return SetWaypointResponse(success)
 
@@ -43,12 +47,17 @@ def set_startpoint_callback(request):
   return SetStartpointResponse(success)
 
 def main():
+  global logger
+
   rospy.init_node('recorder')
 
   service_set_waypoint = rospy.Service(rospy.get_name() + '/set_waypoint', SetWaypoint, set_waypoint_callback)
   service_set_startpoint = rospy.Service(rospy.get_name() + '/set_startpoint', SetStartpoint, set_startpoint_callback)
-  
-  rate = rospy.Rate(100)
+ 
+  logfile = rospy.get_param("~logfile", "/home/l3xz/log.txt")
+  logger = Logger(logfile)
+
+  rate = rospy.Rate(10)
   
   global mutex
   while not rospy.is_shutdown():

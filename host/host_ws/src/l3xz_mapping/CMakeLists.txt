@@ -42,6 +42,7 @@ catkin_install_python(PROGRAMS
    scripts/transform_odom.py
    scripts/recorder.py
    scripts/dummy_caller.py
+   scripts/logger.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

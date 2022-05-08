@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
-## @package transform_odom
-#  Creates odometry message from timestamped tf parent child relation
 import roslib
 import rospy
 import math
