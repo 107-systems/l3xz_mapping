@@ -249,3 +249,17 @@ body
     top: 75px;
     left: 0px;
 }
+
+#select_tag
+{
+    position: absolute;
+    top: 280px;
+    left: 0px;
+}
+
+#button_log
+{
+    position: absolute;
+    top: 310px;
+    left: 0px;
+}

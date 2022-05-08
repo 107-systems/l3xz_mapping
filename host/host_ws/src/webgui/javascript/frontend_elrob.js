@@ -50,7 +50,7 @@ function set_rgb(topic, r_on, g_on, b_on)
   var client = new ROSLIB.Service({
     ros : ros,
     name : topic,
-    serviceType : 'l3xz_openmv_camera/rgb'
+    serviceType : 'l3xz_openmv_camera/Rgb'
   });
 
   var request = new ROSLIB.ServiceRequest({
@@ -67,7 +67,7 @@ function set_ir(topic, ir_on)
   var client = new ROSLIB.Service({
     ros : ros,
     name : topic,
-    serviceType : 'l3xz_openmv_camera/ir'
+    serviceType : 'l3xz_openmv_camera/Ir'
   });
 
   var request = new ROSLIB.ServiceRequest({
@@ -91,4 +91,41 @@ function rgb_lighting_onclick()
           document.getElementById("rgb_green").checked,
           document.getElementById("rgb_blue").checked);
   set_ir('/l3xz/openmv_rgb/ir', document.getElementById("rgb_ir").checked);
+}
+
+function set_waypoint(topic, infotag)
+{
+  var client = new ROSLIB.Service({
+    ros : ros,
+    name : topic,
+    serviceType : 'l3xz_mapping/SetWaypoint'
+  });
+
+  var request = new ROSLIB.ServiceRequest({
+    waypoint{
+      header{
+        seq: 0,
+        stamp: {0, 0},
+        frame_id: " "
+      },
+      position{
+        x: 0,
+        y: 0,
+        z: 0
+      },
+      tag: infotag
+    }
+  });
+
+  client.callService(request, function(result) { console.log(result);});
+}
+
+function button_log_onclick()
+{
+  switch(document.getElementById("select_tag").value)
+  {
+    case "thermal": console.log("THERMAL"); break;
+    case "radiation": console.log("RADIATION"); break;
+    default: console.log("tag not implemented"); break;
+  }
 }
