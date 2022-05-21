@@ -102,22 +102,22 @@ function set_waypoint(topic, infotag)
   });
 
   var request = new ROSLIB.ServiceRequest({
-    waypoint{
-      header{
-        seq: 0,
-        stamp: {0, 0},
-        frame_id: " "
+  waypoint : {
+      header: {
+        seq : 0,
+        stamp : {0, 0},
+        frame_id : 'waypoint'
       },
-      position{
-        x: 0,
-        y: 0,
-        z: 0
+      position : {
+        x : 0,
+        y : 0,
+        z : 0
       },
-      tag: infotag
+      tag : infotag
     }
   });
 
-  client.callService(request, function(result) { console.log(result);});
+  client.callService(request, function(result) { console.log(result);});*/
 }
 
 function button_log_onclick()
