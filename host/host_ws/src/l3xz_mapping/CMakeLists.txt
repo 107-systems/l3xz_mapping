@@ -7,9 +7,9 @@ find_package(catkin REQUIRED COMPONENTS
 	std_msgs
 	tf
 	sensor_msgs
-  geometry_msgs
+        geometry_msgs
 	rospy
-  message_generation
+        message_generation
 )
 
 add_message_files(
@@ -31,7 +31,7 @@ generate_messages(
 )
 
 catkin_package(
-	CATKIN_DEPENDS nav_msgs std_msgs tf sensor_msgs
+	CATKIN_DEPENDS nav_msgs std_msgs tf sensor_msgs rospy
 )
 
 include_directories(
@@ -42,7 +42,8 @@ catkin_install_python(PROGRAMS
    scripts/transform_odom.py
    scripts/recorder.py
    scripts/dummy_caller.py
-   scripts/logger.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/scripts/geo.py DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../../devel/lib/${PROJECT_NAME})
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/scripts/logger.py DESTINATION ${CMAKE_CURRENT_SOURCE_DIR}/../../devel/lib/${PROJECT_NAME})

@@ -204,28 +204,28 @@ body
 {
     position: absolute;
     left: 0px;
-    top: 520px;
+    top: 540px;
 }
 
 #button_right
 {
     position: absolute;
     left: 160px;
-    top: 520px;
+    top: 540px;
 }
 
 #button_up
 {
     position: absolute;
     left: 80px;
-    top: 440px;
+    top: 460px;
 }
 
 #button_down
 {
     position: absolute;
     left: 80px;
-    top: 600px;
+    top: 620px;
 }
 
 #button_emstop 
@@ -233,7 +233,7 @@ body
     background-color: red;
     position: absolute;
     left: 80px;
-    top: 520px;
+    top: 540px;
 }
 
 #button_download
@@ -253,13 +253,49 @@ body
 #select_tag
 {
     position: absolute;
-    top: 280px;
+    top: 260px;
     left: 0px;
 }
 
 #button_log
 {
     position: absolute;
-    top: 310px;
+    top: 290px;
     left: 0px;
 }
+
+#input_startlat
+{
+    position: absolute;
+    top: 330px;
+    left: 0px;
+}
+
+#output_startlat
+{
+    position: absolute;
+    top: 330px;
+    left: 150px;
+}
+
+#input_startlon
+{
+    position: absolute;
+    top: 370px;
+    left: 0px;
+}
+
+#output_startlon
+{
+    position: absolute;
+    top: 370px;
+    left: 150px;
+}
+
+#button_startlog
+{
+    position: absolute;
+    top: 410px;
+    left: 0px;
+}
+

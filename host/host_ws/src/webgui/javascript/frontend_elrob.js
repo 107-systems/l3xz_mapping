@@ -93,39 +93,19 @@ function rgb_lighting_onclick()
   set_ir('/l3xz/openmv_rgb/ir', document.getElementById("rgb_ir").checked);
 }
 
-function set_waypoint(topic, infotag)
-{
-  var client = new ROSLIB.Service({
-    ros : ros,
-    name : topic,
-    serviceType : 'l3xz_mapping/SetWaypoint'
-  });
-
-  var request = new ROSLIB.ServiceRequest({
-  waypoint : {
-      header: {
-        seq : 0,
-        stamp : {0, 0},
-        frame_id : 'waypoint'
-      },
-      position : {
-        x : 0,
-        y : 0,
-        z : 0
-      },
-      tag : infotag
-    }
-  });
-
-  client.callService(request, function(result) { console.log(result);});*/
-}
-
 function button_log_onclick()
 {
   switch(document.getElementById("select_tag").value)
   {
-    case "thermal": console.log("THERMAL"); break;
-    case "radiation": console.log("RADIATION"); break;
+    case "thermal": logger.set_waypoint("/l3xz/thermal_recorder/set_waypoint", "thermal");  break;
+    case "radiation": logger.set_waypoint("/l3xz/radiation_recorder/set_waypoint", "radiation"); break;
     default: console.log("tag not implemented"); break;
   }
+}
+
+function button_startlog_onclick()
+{
+  logger.set_startpoint("/l3xz/thermal_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
+  logger.set_startpoint("/l3xz/radiation_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
+  logger.set_startpoint("/l3xz/odom_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
 }

@@ -42,7 +42,7 @@ def set_startpoint_callback(request):
   success = True 
   startposition = request.startpoint.position
   startpoint = GeoPoint(request.startpoint.latitude, request.startpoint.longitude)
-  print(request)
+  rospy.loginfo(request)
   mutex.release()
   return SetStartpointResponse(success)
 
@@ -54,8 +54,10 @@ def main():
   service_set_waypoint = rospy.Service(rospy.get_name() + '/set_waypoint', SetWaypoint, set_waypoint_callback)
   service_set_startpoint = rospy.Service(rospy.get_name() + '/set_startpoint', SetStartpoint, set_startpoint_callback)
  
-  logfile = rospy.get_param("~logfile", "/home/l3xz/log.txt")
-  logger = Logger(logfile)
+  logpath = rospy.get_param("~logpath", "/home/l3xz/log.txt")
+  artifact_topics = rospy.get_param("~artifacts", []) 
+  
+  logger = Logger(logpath, artifact_topics)
 
   rate = rospy.Rate(10)
   

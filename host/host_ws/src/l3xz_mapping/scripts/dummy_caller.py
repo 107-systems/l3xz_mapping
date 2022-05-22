@@ -16,6 +16,9 @@ from l3xz_mapping.srv import SetWaypoint, SetWaypointResponse
 from l3xz_mapping.msg import Startpoint
 from l3xz_mapping.srv import SetStartpoint, SetStartpointResponse
 
+from nav_msgs.msg import Odometry
+from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
+
 def set_waypoint_client(x, y, tag):
   rospy.wait_for_service('/l3xz/recorder/set_waypoint')
   try:
@@ -32,20 +35,30 @@ def set_waypoint_client(x, y, tag):
 
 if __name__ == "__main__":
   
-  rospy.wait_for_service('/l3xz/recorder/set_startpoint')
-  try:
-    setter = rospy.ServiceProxy('/l3xz/recorder/set_startpoint', SetStartpoint)
-    p = Startpoint()
-    p.position.x = 0
-    p.position.y = 0
-    p.position.z = 0
-    p.latitude = 49.012240
-    p.longitude = 12.792822
-    resp = setter(p)
-  except rospy.ServiceException as e:
-    print("Service call failed: %s"%e)
+#  rospy.wait_for_service('/l3xz/recorder/set_startpoint')
+  rospy.init_node("~")
+  publisher = rospy.Publisher(rospy.get_param('~odometry_out', '/odom_slam'), Odometry, queue_size = 1)
+ 
+#  try:
+#    setter = rospy.ServiceProxy('/l3xz/recorder/set_startpoint', SetStartpoint)
+#    p = Startpoint()
+#    p.position.x = 0
+#    p.position.y = 0
+#    p.position.z = 0
+#    p.latitude = 49.012240
+#    p.longitude = 12.792822
+#    resp = setter(p)
+#  except rospy.ServiceException as e:
+#    print("Service call failed: %s"%e)
   
   for x in range(0, 50):
     for y in range(0, 50):
-      set_waypoint_client(x, y, "test") 
-      time.sleep(0.1)
+#      set_waypoint_client(x, y, "test") 
+      data = Odometry()
+      data.header.stamp = rospy.Time.now()
+      data.header.frame_id = "map"
+      data.child_frame_id = "base_link"
+      data.pose.pose.position = Vector3(x, y, 0)
+      publisher.publish(data)
+      print("publish")
+      time.sleep(0.5)

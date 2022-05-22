@@ -58,6 +58,7 @@ RUN pip3 install utm
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+RUN mkdir /home/log
 RUN mkdir /home/l3xz
 WORKDIR /home/l3xz
 
