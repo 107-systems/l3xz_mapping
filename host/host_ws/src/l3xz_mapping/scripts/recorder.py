@@ -20,15 +20,18 @@ mutex = threading.Lock()
 startposition = None
 startpoint = None
 logger = None
+track = []
 
 def set_waypoint_callback(request):
   global startposition
   global startpoint
   global logger
+  global track
   global mutex
   mutex.acquire()
   success = True 
   if startpoint is not None and startposition is not None:
+    track.append(request.waypoint)
     logpoint = startpoint.point_from_delta(request.waypoint.position.x - startposition.x, request.waypoint.position.y - startposition.y)
     logger.log(request.waypoint.header.stamp.secs, request.waypoint.header.stamp.nsecs * 1000, logpoint.utm_zone, logpoint.utm_easting, logpoint.utm_northing) 
   mutex.release()
@@ -48,6 +51,8 @@ def set_startpoint_callback(request):
 
 def main():
   global logger
+  global mutex
+  global track
 
   rospy.init_node('recorder')
 
@@ -59,12 +64,20 @@ def main():
   
   logger = Logger(logpath, artifact_topics)
 
-  rate = rospy.Rate(10)
+  rate = rospy.Rate(rospy.get_param("~track_publishing_rate", 1))
+  track_publisher = None
+  if rospy.get_param("~publish_track", True):
+    track_publisher = rospy.Publisher(rospy.get_name() + "/track",
+          Track, queue_size = 1)
   
-  global mutex
   while not rospy.is_shutdown():
 
     mutex.acquire() 
+    if track_publisher is not None and len(track) > 0:
+      msg = Track()
+      msg.description = rospy.get_name()
+      msg.track = track
+      track_publisher.publish(msg)
     mutex.release()
     
     rate.sleep()
