@@ -39,8 +39,8 @@ def set_waypoint_callback(request):
   mutex.release()
   return SetWaypointResponse(success)
 
-def set_startpoint_callback(request):
-  global startposition
+def set_startpoint_callback(request): 
+  global startposition 
   global startpoint
   global bearing
   global mutex
@@ -82,8 +82,7 @@ def main():
       msg.description = rospy.get_name()
       msg.track = track
       track_publisher.publish(msg)
-    mutex.release()
-    
+    mutex.release()    
     rate.sleep()
 
 if __name__ == '__main__':

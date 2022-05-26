@@ -61,8 +61,8 @@ class Logger:
     utm_easting = point.utm_easting
     lat = point.latitude
     lon = point.longitude
-
-    data = str(seconds) + ".{:06d}".format(microseconds) + " " + str(utm_zone) + " " + str(utm_northing) + " " + str(utm_easting)
+    
+    data = str(seconds) + "." + str(microseconds)[0:6] + " " + str(utm_zone) + " " + str(utm_northing) + " " + str(utm_easting)
     rospy.loginfo(data)
     self._logfile.write(data + "\n")
 
@@ -75,5 +75,5 @@ class Logger:
       artifactpath = self._logpath + artifact.name
       if not os.path.exists(artifactpath):
         os.makedirs(artifactpath, exist_ok = True)
-      artifactpath += "/" + str(seconds) + ".{:06d}".format(microseconds) + "_" + str(utm_zone) + str(utm_northing) + "_" + str(utm_easting)
+      artifactpath += "/" + data
       artifact.log(artifactpath)

@@ -1,0 +1,11 @@
+<launch>
+<node pkg="l3xz_mapping" type="plotter.py" name="map_plotter" output="screen" ns="l3xz">
+	<param name="img_source" value="/home/log/map.png"/>
+	<param name="img_dest" value="/home/log/map_dest.png"/>
+	<param name="meters_per_pixel" value="0.1"/>
+	<rosparam param="zero_px">[100, 100]</rosparam>
+	<param name="bearing_deg" value="0.0"/>
+	<rosparam param="opi_tracks">['/l3xz/thermal_recorder/track', '/l3xz/radiation_recorder/track']</rosparam>
+	<param name="robot_track" value='/l3xz/odom_recorder/track'/>
+</node>
+</launch>

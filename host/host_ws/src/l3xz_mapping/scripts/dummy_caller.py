@@ -60,13 +60,13 @@ if __name__ == "__main__":
 #    print("Service call failed: %s"%e)
   x = 0
   y = 0
-  for x in range(0, 50):
+  for x in range(0, 25):
     publisher.publish(preparedata(x, y))
     time.sleep(0.5)
   for y in range(0, 50):
     publisher.publish(preparedata(x, y))
     time.sleep(0.5)
-  for x in range(50, -50, -1):
+  for x in range(25, -50, -1):
     publisher.publish(preparedata(x, y))
     time.sleep(0.5)
   for y in range(50, -50, -1):
