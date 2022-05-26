@@ -33,6 +33,14 @@ def set_waypoint_client(x, y, tag):
   except rospy.ServiceException as e:
     print("Service call failed: %s"%e)
 
+def preparedata(x, y):
+  data = Odometry()
+  data.header.stamp = rospy.Time.now()
+  data.header.frame_id = "map"
+  data.child_frame_id = "base_link"
+  data.pose.pose.position = Vector3(x, y, 0)
+  return data
+
 if __name__ == "__main__":
   
 #  rospy.wait_for_service('/l3xz/recorder/set_startpoint')
@@ -50,15 +58,24 @@ if __name__ == "__main__":
 #    resp = setter(p)
 #  except rospy.ServiceException as e:
 #    print("Service call failed: %s"%e)
-  
+  x = 0
+  y = 0
   for x in range(0, 50):
-    for y in range(0, 50):
-#      set_waypoint_client(x, y, "test") 
-      data = Odometry()
-      data.header.stamp = rospy.Time.now()
-      data.header.frame_id = "map"
-      data.child_frame_id = "base_link"
-      data.pose.pose.position = Vector3(x, y, 0)
-      publisher.publish(data)
-      print("publish")
-      time.sleep(0.5)
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+  for y in range(0, 50):
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+  for x in range(50, -50, -1):
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+  for y in range(50, -50, -1):
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+  for x in range(-50, 0):
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+  for y in range(-50, 0):
+    publisher.publish(preparedata(x, y))
+    time.sleep(0.5)
+

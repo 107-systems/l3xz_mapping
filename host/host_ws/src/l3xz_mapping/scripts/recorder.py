@@ -19,6 +19,7 @@ mutex = threading.Lock()
 
 startposition = None
 startpoint = None
+bearing = 0
 logger = None
 track = []
 
@@ -27,24 +28,27 @@ def set_waypoint_callback(request):
   global startpoint
   global logger
   global track
+  global bearing
   global mutex
   mutex.acquire()
   success = True 
   if startpoint is not None and startposition is not None:
     track.append(request.waypoint)
-    logpoint = startpoint.point_from_delta(request.waypoint.position.x - startposition.x, request.waypoint.position.y - startposition.y)
-    logger.log(request.waypoint.header.stamp.secs, request.waypoint.header.stamp.nsecs * 1000, logpoint.utm_zone, logpoint.utm_easting, logpoint.utm_northing) 
+    logpoint = startpoint.point_from_delta(request.waypoint.position.x - startposition.x, request.waypoint.position.y - startposition.y, bearing)
+    logger.log(request.waypoint.header.stamp.secs, request.waypoint.header.stamp.nsecs * 1000, logpoint) 
   mutex.release()
   return SetWaypointResponse(success)
 
 def set_startpoint_callback(request):
   global startposition
   global startpoint
+  global bearing
   global mutex
   mutex.acquire()
   success = True 
   startposition = request.startpoint.position
   startpoint = GeoPoint(request.startpoint.latitude, request.startpoint.longitude)
+  bearing = request.startpoint.bearing 
   rospy.loginfo(request)
   mutex.release()
   return SetStartpointResponse(success)

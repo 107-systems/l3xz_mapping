@@ -59,8 +59,8 @@ class GeoPoint:
     self._utm_northing = u[1]
     self._utm_zone = str(u[2]) + str(u[3])
 
-  def point_from_delta(self, delta_x, delta_y):
+  def point_from_delta(self, delta_y, delta_x, bearing_deg = 0):
     d = geopy.distance.geodesic(kilometers = (math.sqrt(delta_x ** 2 + delta_y ** 2) / 1000))
-    bearing = math.atan2(delta_y, delta_x) / math.pi * 180
+    bearing = 180 + bearing_deg + math.atan2(delta_y, delta_x) / math.pi * 180
     dest = d.destination(point = geopy.Point(self._latitude, self._longitude), bearing = bearing)
     return GeoPoint(dest.latitude, dest.longitude)

@@ -6,6 +6,8 @@ import os
 import shutil
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
+import gpxpy
+from geo import GeoPoint
 
 class Artifact:
 
@@ -38,18 +40,37 @@ class Logger:
     os.mkdir(logpath)
     self._logpath = logpath
     self._logfile = open(logpath + "/log.txt", "w")
+    self._gpxfile = logpath + "/track.gpx"
     self._artifacts = []
     for a in artifacts:
       print(a)
       self._artifacts.append(Artifact(a))
 
+    self._gpx = gpxpy.gpx.GPX()
+    self._gpx_track = gpxpy.gpx.GPXTrack()
+    self._gpx.tracks.append(self._gpx_track)
+    self._gpx_segment = gpxpy.gpx.GPXTrackSegment()
+    self._gpx_track.segments.append(self._gpx_segment)
+
   def __del__(self):
     self._logfile.close()
 
-  def log(self, seconds, microseconds, utm_zone, utm_northing, utm_easting):
+  def log(self, seconds, microseconds, point):
+    utm_zone = point.utm_zone
+    utm_northing = point.utm_northing
+    utm_easting = point.utm_easting
+    lat = point.latitude
+    lon = point.longitude
+
     data = str(seconds) + ".{:06d}".format(microseconds) + " " + str(utm_zone) + " " + str(utm_northing) + " " + str(utm_easting)
     rospy.loginfo(data)
     self._logfile.write(data + "\n")
+
+    self._gpx_segment.points.append(gpxpy.gpx.GPXTrackPoint(lat, lon))
+    print(self._gpxfile)
+    with open(self._gpxfile, "w") as f:
+      f.write(self._gpx.to_xml())
+
     for artifact in self._artifacts:
       artifactpath = self._logpath + artifact.name
       if not os.path.exists(artifactpath):

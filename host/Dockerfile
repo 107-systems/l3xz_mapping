@@ -55,6 +55,8 @@ COPY ./chrony.conf /etc/chrony
 
 RUN pip3 install geopy
 RUN pip3 install utm
+RUN pip3 install requests
+RUN pip3 install gpxpy
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 

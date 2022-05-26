@@ -49,9 +49,10 @@ class Logger
     }
   }
 
-  set_startpoint(topic, lat, lon)
+  set_startpoint(topic, lat, lon, bearing_deg)
   {
     console.log(this.odom)
+    console.log(bearing_deg)
     if(this.odom)
     {
       var client = new ROSLIB.Service({
@@ -68,7 +69,8 @@ class Logger
             z : logger.odom.pose.pose.position.z
           },
           latitude : parseFloat(lat),
-	  longitude: parseFloat(lon)
+	  longitude: parseFloat(lon),
+	  bearing: parseFloat(bearing_deg)
         }
       });
 

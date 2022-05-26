@@ -105,7 +105,7 @@ function button_log_onclick()
 
 function button_startlog_onclick()
 {
-  logger.set_startpoint("/l3xz/thermal_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
-  logger.set_startpoint("/l3xz/radiation_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
-  logger.set_startpoint("/l3xz/odom_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value);
+  logger.set_startpoint("/l3xz/thermal_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value, document.getElementById("input_startbearing").value);
+  logger.set_startpoint("/l3xz/radiation_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value, document.getElementById("input_startbearing").value);
+  logger.set_startpoint("/l3xz/odom_recorder/set_startpoint", document.getElementById("input_startlat").value, document.getElementById("input_startlon").value, document.getElementById("input_startbearing").value);
 }

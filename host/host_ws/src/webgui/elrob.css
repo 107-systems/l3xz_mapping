@@ -204,28 +204,28 @@ body
 {
     position: absolute;
     left: 0px;
-    top: 540px;
+    top: 560px;
 }
 
 #button_right
 {
     position: absolute;
     left: 160px;
-    top: 540px;
+    top: 560px;
 }
 
 #button_up
 {
     position: absolute;
     left: 80px;
-    top: 460px;
+    top: 480px;
 }
 
 #button_down
 {
     position: absolute;
     left: 80px;
-    top: 620px;
+    top: 640px;
 }
 
 #button_emstop 
@@ -233,7 +233,7 @@ body
     background-color: red;
     position: absolute;
     left: 80px;
-    top: 540px;
+    top: 560px;
 }
 
 #button_download
@@ -274,8 +274,8 @@ body
 #output_startlat
 {
     position: absolute;
-    top: 330px;
-    left: 150px;
+    top: 340px;
+    left: 210px;
 }
 
 #input_startlon
@@ -288,14 +288,28 @@ body
 #output_startlon
 {
     position: absolute;
-    top: 370px;
-    left: 150px;
+    top: 380px;
+    left: 210px;
+}
+
+#input_startbearing
+{
+    position: absolute;
+    top: 410px;
+    left: 0px;
+}
+
+#output_startbearing
+{
+    position: absolute;
+    top: 420px;
+    left: 210px;
 }
 
 #button_startlog
 {
     position: absolute;
-    top: 410px;
+    top: 450px;
     left: 0px;
 }
 
