@@ -16,6 +16,7 @@
         --RGBD/ProximityBySpace 1
 	--Rtabmap/DetectionRate 1       
 	"/>
+        <arg name="approx_sync" value="false"/>
         <arg name="visualodom_topic" value="/rtabmap/odom"/>
         <arg name="visual_odometry" value="true"/>
         <arg name="rgb_topic" value="/camera/color/image_raw"/>
@@ -26,7 +27,7 @@
         <arg name="rtabmapviz" value="false"/>
         <arg name="rviz" value="false"/>
         <arg name="wait_for_transform" value="1.0"/>
-        <arg name="subscribe_scan" value="true"/>
+        <arg name="subscribe_scan" value="false"/>
         <arg name="scan_topic" value="/l3xz/laser_link"/>
         <arg name="queue_size" value="100"/>
     </include>

@@ -20,12 +20,14 @@ tmux_send_all() {
 }
 
 /etc/init.d/chrony stop
+rm /etc/chrony/chrony.conf
+cp chrony.conf /etc/chrony
 echo "allow $(cat client_ip.conf)/24" >> /etc/chrony/chrony.conf
 /etc/init.d/chrony start
 
 tmux_send_all "source /opt/ros/noetic/setup.bash" C-m
-#tmux_send_all "export ROS_MASTER_URI=http://$(cat master_ip.conf):11311" C-m
-#tmux_send_all "export ROS_MASTER_IP=$(cat master_ip.conf)" C-m
+tmux_send_all "export ROS_MASTER_URI=http://$(cat master_ip.conf):11311" C-m
+tmux_send_all "export ROS_MASTER_IP=$(cat master_ip.conf)" C-m
 
 tmux selectp -t 0
 tmux send-keys "cd /home/l3xz/host_ws" C-m

@@ -707,18 +707,8 @@ class Visualizer
       var height = this.height;
       var arr = message.data;
 
-    if(height > this.height || width > this.width)
-    {
-      if(this.odom)
-      {
-
-      }
-    }
-    else
-    {
       width = message.info.width;
       height = message.info.height;
-    }
 
     var img = this.context.getImageData(0, 0, width, height);
     var pixels = img.data;

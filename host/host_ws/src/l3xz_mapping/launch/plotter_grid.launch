@@ -1,0 +1,9 @@
+<launch>
+<node pkg="l3xz_mapping" type="plotter.py" name="map_plotter" output="screen" ns="l3xz">
+        <param name="from_grid" value="true"/>
+	<param name="grid_topic" value="/rtabmap/grid_map"/>
+	<param name="img_dest" value="/home/log/maps"/>
+	<rosparam param="opi_tracks">['/l3xz/thermal_recorder/track', '/l3xz/radiation_recorder/track']</rosparam>
+	<param name="robot_track" value='/l3xz/odom_recorder/track'/>
+</node>
+</launch>
