@@ -1,0 +1,6 @@
+<launch>
+<node pkg="l3xz_mapping" type="recorder.py" name="thermal_recorder" output="screen" ns="l3xz">
+	<param name="logpath" value="/home/log/thermal"/>
+	<rosparam param="artifacts">['/l3xz/openmv_rgb/image_color', '/l3xz/openmv_thermal/image_color']</rosparam>
+</node>
+</launch>

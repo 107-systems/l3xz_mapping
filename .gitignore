@@ -1,0 +1,8 @@
+**/dockerid.id
+**.swp
+**.swo
+**.catkin_workspace
+**/install
+**/devel
+**/build
+**/__pychache__

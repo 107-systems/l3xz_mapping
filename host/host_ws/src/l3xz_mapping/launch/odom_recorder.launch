@@ -1,0 +1,7 @@
+<launch>
+<node pkg="l3xz_mapping" type="odom_waypoint.py" name="odom_setter" output="screen" ns="l3xz">
+</node>
+<node pkg="l3xz_mapping" type="recorder.py" name="odom_recorder" output="screen" ns="l3xz">
+	<param name="logpath" value="/home/log/odom"/>
+</node>
+</launch>
