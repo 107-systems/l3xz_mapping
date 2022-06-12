@@ -13,8 +13,8 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 │       └── src
 │           ├── l3xz_mapping
 │           │   └── launch
-│           ├── l3xz_openmv_camera [Driver for OpenMV cameras](https://github.com/107-systems/l3xz_openmv_camera)
-│           └── l3xz_sweep_scanner [Driver for Scanse Sweep 360° 2D LIDAR](https://github.com/107-systems/l3xz_sweep_scanner)
+│           ├── l3xz_openmv_camera (Driver for OpenMV cameras: https://github.com/107-systems/l3xz_openmv_camera)
+│           └── l3xz_sweep_scanner (Driver for Scanse Sweep 360° 2D LIDAR: https://github.com/107-systems/l3xz_sweep_scanner)
 ├── doc
 │   └── img
 └── host (host part => deploy this on Your base station)
