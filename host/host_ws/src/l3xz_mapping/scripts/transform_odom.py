@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 #-*- coding: utf-8 -*-
+'''
+This software is distributed under the terms of the MIT License.
+Copyright (c) 2022 107-Systems
+Author: Jonas Wühr
+'''
 import roslib
 import rospy
 import math
