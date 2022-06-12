@@ -38,6 +38,7 @@ Clone the repository and go to host root:
 ~~~bash
 git@github.com:107-systems/l3xz-mapping.git
 cd l3xz-mapping/host
+git submodule update --init
 ~~~
 Build the docker container:
 ~~~bash
@@ -63,6 +64,7 @@ Clone the repository and go to client root:
 ~~~bash
 git@github.com:107-systems/l3xz-mapping.git
 cd l3xz-mapping/client
+git submodule update --init
 ~~~
 Edit the following files according to Your setup:
 * master_ip.conf: IP of base station
