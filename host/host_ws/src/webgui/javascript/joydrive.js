@@ -1,3 +1,8 @@
+/***************************************************************
+This software is distributed under the terms of the MIT License.
+Copyright (c) 2022 107-Systems
+Author: Jonas Wühr
+****************************************************************/
 class Joydrive
 {
     constructor(maxX, maxR, xStep, rStep)

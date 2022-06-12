@@ -1,5 +1,11 @@
 #!/usr/bin/python3
 #-*- coding: utf-8 -*-
+'''
+This software is distributed under the terms of the MIT License.
+Copyright (c) 2022 107-Systems
+Author: Jonas Wühr
+'''
+
 from __future__ import print_function
 import os
 if 'ROS_NAMESPACE' not in os.environ:
