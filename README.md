@@ -6,7 +6,7 @@ This repository includes the ROS-based explorative mapping stack of L3X-Z for El
 The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs on a base station, does the mapping using RTAB-Map, data logging and comes with a browser frontend. Part two can be deployed to the Raspberry Pi on the robot. It's purpose is to read all the sensor data and transmit it to part one. 
 
 # Overview
-
+```
 .
 ├── client (client part => deploy this on Your robot)
 │   └── client_ws (catkin workspace)
@@ -29,6 +29,7 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
             └── webgui (webinterface for operation and debugging)
                 ├── javascript
                 └── resources
+```              
 
 # Setup
 
