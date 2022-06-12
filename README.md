@@ -129,7 +129,7 @@ Records waypoints according to Elrob log format with Unix timestamp and WSG84 co
 #### Service clients
 
 | Default Name | Purpose |
-|:-:|:-:|-|
+|:-:|:-:|
 | `recorder/set_startpoint` | Set initial robot position. Needs to be done only once and is necessary to start recording. |
 | `recorder/set_waypoint` | Record a new waypoint. |
 
