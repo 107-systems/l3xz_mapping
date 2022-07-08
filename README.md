@@ -58,7 +58,7 @@ sudo ./start_docker.sh
 A tmux session will appear, the software base is automatically built and executed.
 
 ## Part 2 (the robot part)
-Install the Realsense ROS enviroment and chrony for timesync:
+Install the Realsense ROS environment and chrony for timesync:
 ~~~bash
 sudo apt-get install ros-noetic-realsense2-camera chrony
 ~~~
