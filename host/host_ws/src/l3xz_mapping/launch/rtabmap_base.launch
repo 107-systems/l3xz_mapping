@@ -357,7 +357,7 @@
       <param name="Mem/InitWMWithAllNodes" type="string" value="$(arg localization)"/>
     </node>
   
-    <!-- Visualisation RTAB-Map -->
+    <!-- Visualization RTAB-Map -->
     <node if="$(arg rtabmapviz)" pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(arg gui_cfg)" output="$(arg output)" launch-prefix="$(arg launch_prefix)">
       <param     if="$(arg stereo)" name="subscribe_depth"  type="bool" value="false"/>
       <param unless="$(arg stereo)" name="subscribe_depth"  type="bool" value="$(arg depth)"/>

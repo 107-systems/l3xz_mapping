@@ -1,6 +1,8 @@
 <a href="https://107-systems.org/"><img align="right" src="https://raw.githubusercontent.com/107-systems/.github/main/logo/107-systems.png" width="15%"></a>
 :floppy_disk: `l3xz-mapping`
 ============================
+[![Spell Check status](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml/badge.svg)](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml)
+
 This repository includes the ROS-based explorative mapping stack of L3X-Z for Elrob 2022.
 
 The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs on a base station, does the mapping using RTAB-Map, data logging and comes with a browser frontend. Part two can be deployed to the Raspberry Pi on the robot. It's purpose is to read all the sensor data and transmit it to part one. 
@@ -56,7 +58,7 @@ sudo ./start_docker.sh
 A tmux session will appear, the software base is automatically built and executed.
 
 ## Part 2 (the robot part)
-Install the Realsense ROS enviroment and chrony for timesync:
+Install the Realsense ROS environment and chrony for timesync:
 ~~~bash
 sudo apt-get install ros-noetic-realsense2-camera chrony
 ~~~
