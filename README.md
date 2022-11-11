@@ -19,8 +19,6 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 │       └── src
 │           ├── l3xz_mapping
 │           │   └── launch
-│           ├── l3xz_openmv_camera (Driver for OpenMV cameras: https://github.com/107-systems/l3xz_openmv_camera)
-│           └── l3xz_sweep_scanner (Driver for Scanse Sweep 360° 2D LIDAR: https://github.com/107-systems/l3xz_sweep_scanner)
 ├── doc
 │   └── img
 └── host (host part => deploy this on Your base station)
@@ -31,10 +29,6 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
             │   ├── msg
             │   ├── scripts
             │   └── srv
-            ├── l3xz_openmv_camera
-            └── webgui (webinterface for operation and debugging)
-                ├── javascript
-                └── resources
 ```              
 
 # Setup
@@ -90,8 +84,6 @@ roslaunch odom_recorder.launch
 roslaunch thermal_recorder.launch
 roslaunch plotter_grid.launch
 ~~~
-The data can be viewed via rviz or the dashboard at ```http://localhost:8000```. The robot/ software can also be operated via the dashboard (TBD).
-![elrob dashboard](doc/img/dashboard.png)
 
 ## Nodes
 
@@ -142,7 +134,7 @@ Records waypoints according to Elrob log format with Unix timestamp and WSG84 co
 #### Published Topipcs
 | Default Name | Type |
 |:-:|:-:|
-| `recorder/track` | [`l3xz_mapping/Track` |
+| `recorder/track` | [`l3xz_mapping/Track`] |
 
 #### Parameters
 | Name | Default | Description |
