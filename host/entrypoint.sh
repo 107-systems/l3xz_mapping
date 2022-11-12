@@ -35,12 +35,6 @@ tmux send-keys "catkin_make install" C-m
 
 tmux_send_all "source /home/l3xz/host_ws/devel/setup.bash" C-m
 
-tmux send-keys "roslaunch rosbridge_server rosbridge_websocket.launch" C-m
-
-tmux selectp -t 1
-tmux send-keys "cd /home/l3xz/host_ws/src/webgui" C-m
-tmux send-keys "python3 -m http.server 8000" C-m
-
 tmux selectp -t 2
 tmux send-keys "cd /home/l3xz/host_ws/src/l3xz_mapping/scripts" C-m
 tmux send-keys "/etc/init.d/chrony status" C-m
