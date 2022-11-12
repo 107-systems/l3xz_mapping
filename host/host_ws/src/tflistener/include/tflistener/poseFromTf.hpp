@@ -47,7 +47,7 @@ private:
   double dx, dy, dz, r, p, y;
 
   /**
-   @brief Pointer to callback function. Is call if waitForIt ist done
+   @brief Pointer to callback function. Is called if waitForIt is done.
    @param dx x-Axis offset in m
    @param dy y-Axis offset in m
    @param dz z-Axis offset in m
