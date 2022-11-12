@@ -1,0 +1,12 @@
+*.swk
+*.swl
+*.swm
+*.swn
+*.swo
+*.swp
+*.vscode
+*.pyc
+doc/**
+catkin_generated
+cmake
+CMakeFiles
