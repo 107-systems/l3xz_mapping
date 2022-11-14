@@ -8,10 +8,4 @@ tmux_send_all() {
 
 tmux_send_all "source client_ws/devel/setup.bash" C-m
 tmux selectp -t 0
-tmux send-keys "roslaunch l3xz_mapping realsense.launch" C-m
-tmux selectp -t 1
-tmux send-keys "roslaunch l3xz_mapping lidar.launch" C-m
-tmux selectp -t 2
-tmux send-keys "roslaunch l3xz_mapping rgb.launch" C-m
-tmux selectp -t 3
-tmux send-keys "roslaunch l3xz_mapping thermal.launch" C-m
+tmux send-keys "roslaunch l3xz_mapping client.launch" C-m
