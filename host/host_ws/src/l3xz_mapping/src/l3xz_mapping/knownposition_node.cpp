@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     pubGrid =
         nh.advertise<nav_msgs::OccupancyGrid>(nh.param("grid_topic", std::string("/grid")), 1);
 
-    std::string lidars = nh.param("lidar_sources", std::string("/road_detector/road_lidar, 1, -1, 2.5"));
+    std::string lidars = nh.param("lidar_sources", std::string("/road_detector/road_lidar, 100, -1, 2.5"));
     lidars.erase(std::remove(lidars.begin(), lidars.end(), ' '), lidars.cend());
     lidars.erase(std::remove(lidars.begin(), lidars.end(), '\n'), lidars.cend());
     std::vector<std::string> configs;

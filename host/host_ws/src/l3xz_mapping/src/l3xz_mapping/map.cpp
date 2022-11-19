@@ -19,22 +19,37 @@ Map::Map(int cells_x, int cells_y, double resolution, double preview)
     _p_0.y = -_resolution * _cells_y * 0.5;
 }
 
-void Map::update_cell(int x, int y, int8_t value)
+void Map::update_cell(double x, double y, int8_t value)
 {
-    if (x >= 0 && x < _cells_x && y >= 0 && y < _cells_y)
+    Pose pivot;
+    pivot.x = -_p_0.x;
+    pivot.y = -_p_0.y;
+    pivot.x += _odom.x;
+    pivot.y += _odom.y;
+    pivot.yaw = _odom.yaw;
+    double s = sin(pivot.yaw - 0.5 * M_PI);
+    double c = cos(pivot.yaw - 0.5 * M_PI);
+
+    double x_m = x * c - y * s;
+    double y_m = x * s + y * c;
+
+    int xx = static_cast<int>((x_m + pivot.x) / _resolution);
+    int yy = _cells_y - static_cast<int>((y_m + pivot.y) / _resolution);
+
+    if (xx >= 0 && xx < _cells_x && yy >= 0 && yy < _cells_y)
     {
-        int32_t current = static_cast<uint32_t>(_map->at<int8_t>(y, x));
+        int32_t current = static_cast<uint32_t>(_map->at<int8_t>(yy, xx));
         if (kUnknown == current)
         {
             current = kMax / 2;
         }
-        if (value > 100 && current < 100)
+        if (value > 0 && current < 100)
         {
-            _map->at<int8_t>(y, x) = static_cast<int8_t>(current + value);
+            _map->at<int8_t>(yy, xx) = static_cast<int8_t>(current + value);
         }
         else if (current > 0)
         {
-            _map->at<int8_t>(y, x) = static_cast<int8_t>(current + value);
+            _map->at<int8_t>(yy, xx) = static_cast<int8_t>(current + value);
         }
     }
 }
@@ -114,33 +129,19 @@ void Map::addLidar(const sensor_msgs::LaserScan &msg, int8_t coeff_block, int8_t
     for (int i = 0; i < size; i++)
     {
         double dist = 0.0;
-        while (1)
+        while (180.0 * abs(angle) / M_PI < 50)
         {
             double x = cos(angle) * dist;
             double y = sin(angle) * dist;
-            Pose pivot;
-            pivot.x = -_p_0.x;
-            pivot.y = -_p_0.y;
-            pivot.x += _odom.x;
-            pivot.y += _odom.y;
-            pivot.yaw = _odom.yaw + angle;
-            double s = sin(pivot.yaw - 0.5 * M_PI);
-            double c = cos(pivot.yaw - 0.5 * M_PI);
-
-            double x_m = x * c - y * s;
-            double y_m = x * s + y * c;
-
-            int xx = static_cast<int>((x_m + pivot.x) / _resolution);
-            int yy = _cells_y - static_cast<int>((y_m + pivot.y) / _resolution);
             if (dist < msg.ranges[i])
             {
-                update_cell(xx, yy, coeff_unblock);
+                update_cell(x, y, coeff_unblock);
             }
             else
             {
                 if (msg.ranges[i] <= max_dist)
                 {
-                    update_cell(xx, yy, coeff_block);
+                    update_cell(x, y, coeff_block);
                 }
                 break;
             }

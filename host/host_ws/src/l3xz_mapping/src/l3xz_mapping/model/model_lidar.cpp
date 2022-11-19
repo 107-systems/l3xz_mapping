@@ -34,5 +34,4 @@ double ModelLidar::probability(double x, double y, double y_point) {
     {
         return _p2;
     }
-    return 0.0;
 }

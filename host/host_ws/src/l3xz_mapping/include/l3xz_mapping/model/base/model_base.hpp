@@ -22,6 +22,8 @@ class ModelBase
         int getOffsetX() { return _pivot_x; }
 
     protected:
+        static constexpr int kMaxOccupation = 100;
+
         cv::Mat _map;
         double _resolution_m;
         int _pivot_x;
