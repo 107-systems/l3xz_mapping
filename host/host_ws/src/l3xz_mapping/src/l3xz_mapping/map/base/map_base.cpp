@@ -1,8 +1,8 @@
-#include <l3xz_mapping/map.hpp>
+#include <l3xz_mapping/map/base/map_base.hpp>
 
-Map::Map(int cells_x, int cells_y, double resolution, double preview)
-    : _cells_x(cells_x), _cells_y(cells_y), _resolution(resolution), _current_map_idx(0),
-      _preview(preview)
+MapBase::MapBase(int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview)
+    : _coeff_block(coeff_block), _coeff_unblock(coeff_unblock),_cells_x(cells_x), _cells_y(cells_y), 
+      _resolution(resolution), _current_map_idx(0), _preview(preview)
 {
     _map_0 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
     _map_1 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
@@ -19,7 +19,7 @@ Map::Map(int cells_x, int cells_y, double resolution, double preview)
     _p_0.y = -_resolution * _cells_y * 0.5;
 }
 
-void Map::update_cell(double x, double y, int8_t value)
+void MapBase::update_cell(double x, double y, int8_t value)
 {
     Pose pivot;
     pivot.x = -_p_0.x;
@@ -54,7 +54,7 @@ void Map::update_cell(double x, double y, int8_t value)
     }
 }
 
-void Map::setOdometry(const nav_msgs::Odometry &msg)
+void MapBase::setOdometry(const nav_msgs::Odometry &msg)
 {
     const std::lock_guard<std::mutex> lock(mu);
     _odom.x = static_cast<double>(msg.pose.pose.position.x);
@@ -70,7 +70,7 @@ void Map::setOdometry(const nav_msgs::Odometry &msg)
     update_map();
 }
 
-void Map::update_map()
+void MapBase::update_map()
 {
     static double offset_max = std::min(_cells_x * _resolution * 0.5, _cells_y * _resolution * 0.5);
     if (offset_max < _center.dist2D(_odom) + _preview)
@@ -120,38 +120,7 @@ void Map::update_map()
     }
 }
 
-void Map::addLidar(const sensor_msgs::LaserScan &msg, int8_t coeff_block, int8_t coeff_unblock,
-                   double max_dist)
-{
-    const std::lock_guard<std::mutex> lock(mu);
-    double angle = static_cast<double>(msg.angle_min);
-    int size = msg.ranges.size();
-    for (int i = 0; i < size; i++)
-    {
-        double dist = 0.0;
-        while (180.0 * abs(angle) / M_PI < 50)
-        {
-            double x = cos(angle) * dist;
-            double y = sin(angle) * dist;
-            if (dist < msg.ranges[i])
-            {
-                update_cell(x, y, coeff_unblock);
-            }
-            else
-            {
-                if (msg.ranges[i] <= max_dist)
-                {
-                    update_cell(x, y, coeff_block);
-                }
-                break;
-            }
-            dist += _resolution;
-        }
-        angle += msg.angle_increment;
-    }
-}
-
-std::shared_ptr<nav_msgs::OccupancyGrid> Map::getMap(std::string frame_id)
+std::shared_ptr<nav_msgs::OccupancyGrid> MapBase::getMap(std::string frame_id)
 {
     static uint32_t seq = 0;
     nav_msgs::OccupancyGrid grid;

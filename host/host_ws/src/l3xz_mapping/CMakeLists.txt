@@ -5,7 +5,7 @@ project(l3xz_mapping)
 set(SOURCELIST
   src/${PROJECT_NAME}/timer.cpp
   src/${PROJECT_NAME}/pose.cpp
-  src/${PROJECT_NAME}/map.cpp
+  src/${PROJECT_NAME}/map/base/map_base.cpp
   src/${PROJECT_NAME}/model/base/model_base.cpp
   src/${PROJECT_NAME}/model/model_lidar.cpp
 )
