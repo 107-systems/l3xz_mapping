@@ -6,8 +6,6 @@ set(SOURCELIST
   src/${PROJECT_NAME}/timer.cpp
   src/${PROJECT_NAME}/pose.cpp
   src/${PROJECT_NAME}/map/base/map_base.cpp
-  src/${PROJECT_NAME}/model/base/model_base.cpp
-  src/${PROJECT_NAME}/model/model_lidar.cpp
 )
 
 add_definitions(-std=c++17 -Wall -g)

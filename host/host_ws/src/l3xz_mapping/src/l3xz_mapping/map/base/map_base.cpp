@@ -1,8 +1,9 @@
 #include <l3xz_mapping/map/base/map_base.hpp>
 
-MapBase::MapBase(int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview)
+template <class T>
+MapBase<T>::MapBase(int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, int queue_size)
     : _coeff_block(coeff_block), _coeff_unblock(coeff_unblock),_cells_x(cells_x), _cells_y(cells_y), 
-      _resolution(resolution), _current_map_idx(0), _preview(preview)
+      _resolution(resolution), _current_map_idx(0), _preview(preview), _queue_size(queue_size), _running(true)
 {
     _map_0 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
     _map_1 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
@@ -17,9 +18,45 @@ MapBase::MapBase(int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cell
 
     _p_0.x = -_resolution * _cells_x * 0.5;
     _p_0.y = -_resolution * _cells_y * 0.5;
+
+    _thread = std::thread(&MapBase::worker, this);
 }
 
-void MapBase::update_cell(double x, double y, int8_t value)
+template <class T>MapBase<T>::~MapBase()
+{
+    _running = false;
+    _thread.join();
+}
+
+template <class T>
+void MapBase<T>::add(const T &msg)
+{
+    std::lock_guard<std::mutex> lock(_mu);
+    if(_messages.size() > _queue_size)
+    {
+        _messages.pop();
+    }
+    _messages.push(std::make_shared<T>(msg));
+}
+
+template <class T>
+void MapBase<T>::worker()
+{
+    while(_running)
+    {
+        _mu.lock();
+        if(!_messages.empty())
+        {
+            eval(_messages.front());
+            _messages.pop();
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        _mu.unlock();
+    }
+}
+
+template <class T>
+void MapBase<T>::update_cell(double x, double y, int8_t value)
 {
     Pose pivot;
     pivot.x = -_p_0.x;
@@ -54,9 +91,10 @@ void MapBase::update_cell(double x, double y, int8_t value)
     }
 }
 
-void MapBase::setOdometry(const nav_msgs::Odometry &msg)
+template <class T>
+void MapBase<T>::setOdometry(const nav_msgs::Odometry &msg)
 {
-    const std::lock_guard<std::mutex> lock(mu);
+    const std::lock_guard<std::mutex> lock(_mu);
     _odom.x = static_cast<double>(msg.pose.pose.position.x);
     _odom.y = static_cast<double>(msg.pose.pose.position.y);
     double x = msg.pose.pose.orientation.x;
@@ -70,7 +108,8 @@ void MapBase::setOdometry(const nav_msgs::Odometry &msg)
     update_map();
 }
 
-void MapBase::update_map()
+template <class T>
+void MapBase<T>::update_map()
 {
     static double offset_max = std::min(_cells_x * _resolution * 0.5, _cells_y * _resolution * 0.5);
     if (offset_max < _center.dist2D(_odom) + _preview)
@@ -120,12 +159,12 @@ void MapBase::update_map()
     }
 }
 
-std::shared_ptr<nav_msgs::OccupancyGrid> MapBase::getMap(std::string frame_id)
+template <class T>
+std::shared_ptr<nav_msgs::OccupancyGrid> MapBase<T>::getMap(std::string frame_id)
 {
     static uint32_t seq = 0;
     nav_msgs::OccupancyGrid grid;
-    const std::lock_guard<std::mutex> lock(mu);
-
+    std::lock_guard<std::mutex> lock(_mu);
     grid.header.seq = seq;
     grid.header.stamp = ros::Time::now();
     grid.header.frame_id = frame_id;

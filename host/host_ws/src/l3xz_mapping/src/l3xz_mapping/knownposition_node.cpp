@@ -1,4 +1,3 @@
-#include <l3xz_mapping/model/model_lidar.hpp>
 #include <l3xz_mapping/map/map_lidar.hpp>
 
 std::shared_ptr<MapLidar> map;
@@ -10,14 +9,14 @@ void callbackOdomIn(const nav_msgs::Odometry &msg) { map->setOdometry(msg); }
 
 void callbackLidarIn(const sensor_msgs::LaserScanConstPtr msg)
 {
-    map->addLidar(*msg);
+    map->add(*msg);
 }
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "knownposition");
     ros::NodeHandle nh("~");
-    map = std::make_shared<MapLidar>(100, -1, 2.5, nh.param("pixel_x", 600), nh.param("pixel_y", 600),
+    map = std::make_shared<MapLidar>(100, -1, 2.5, 180.0, nh.param("pixel_x", 600), nh.param("pixel_y", 600),
                                 nh.param("resolution", 0.1));
     subOdom =
         nh.subscribe(nh.param("odometry_topic", std::string("/odom_slam")), 1, callbackOdomIn);
