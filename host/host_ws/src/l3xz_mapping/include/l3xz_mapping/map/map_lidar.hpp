@@ -12,7 +12,7 @@ class MapLidar : public MapBase<sensor_msgs::LaserScan> {
                   preview),
               _max_dist(max_dist), _clamp_deg(clamp_deg){};
 
-        virtual ~MapLidar() {};
+        virtual ~MapLidar() = default;
         MapLidar(const MapLidar&) = delete;
         MapLidar(MapLidar&&) = delete;
         MapLidar& operator=(const MapLidar&) = delete;

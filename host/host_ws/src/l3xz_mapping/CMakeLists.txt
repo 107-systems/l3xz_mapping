@@ -5,7 +5,9 @@ project(l3xz_mapping)
 set(SOURCELIST
   src/${PROJECT_NAME}/timer.cpp
   src/${PROJECT_NAME}/pose.cpp
+  src/${PROJECT_NAME}/tflistener.cpp
   src/${PROJECT_NAME}/map/base/map_base.cpp
+  src/${PROJECT_NAME}/map/base/map_interface.cpp
 )
 
 add_definitions(-std=c++17 -Wall -g)
@@ -19,7 +21,6 @@ find_package(catkin REQUIRED COMPONENTS
 	rospy
     message_generation
     image_transport
-    tflistener
 )
 
 add_message_files(
