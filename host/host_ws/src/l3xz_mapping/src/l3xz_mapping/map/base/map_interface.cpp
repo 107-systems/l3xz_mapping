@@ -1,15 +1,18 @@
 #include <l3xz_mapping/map/base/map_interface.hpp>
 
-MapInterface::MapInterface(int8_t coeff_block, int8_t coeff_unblock,
+MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock,
                            int cells_x, int cells_y, double resolution,
-                           double preview)
-    : _coeff_block(coeff_block),
+                           double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing)
+    : _name(name),
+      _coeff_block(coeff_block),
       _coeff_unblock(coeff_unblock),
       _cells_x(cells_x),
       _cells_y(cells_y),
       _resolution(resolution),
+      _preview(preview),
+      _postprocessing(postprocessing),
       _current_map_idx(0),
-      _preview(preview) 
+      _debug(false)
 {
         _map_0 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
         _map_1 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
@@ -124,6 +127,14 @@ void MapInterface::update_map()
         _p_0.x = _center.x - _resolution * _cells_x * 0.5;
         _p_0.y = _center.y - _resolution * _cells_y * 0.5;
         _map = new_map;
+    }
+}
+
+void MapInterface::postprocess()
+{
+    for(auto& algo : _postprocessing)
+    {
+        _map = algo->eval(_map);
     }
 }
 

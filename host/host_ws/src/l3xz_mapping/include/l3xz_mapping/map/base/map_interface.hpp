@@ -8,10 +8,12 @@
 #include <stdint.h>
 
 #include <l3xz_mapping/pose.hpp>
+#include <l3xz_mapping/map/base/map_postprocessing.hpp>
 #include <mutex>
 #include <queue>
 #include <thread>
 #include <chrono>
+#include <string>
 #include <opencv4/opencv2/core/types.hpp>
 #include <opencv4/opencv2/highgui/highgui.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
@@ -20,7 +22,8 @@
 class MapInterface
 {
 public:
-    explicit MapInterface(int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview);
+    MapInterface(){}
+    MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing);
     virtual ~MapInterface() = default;
     MapInterface(const MapInterface&) = delete;
     MapInterface(MapInterface&&) = delete;
@@ -30,20 +33,25 @@ public:
     void setOdometry(const nav_msgs::Odometry &msg);
     cv::Mat getMat() { return _map->clone(); }
     std::shared_ptr<nav_msgs::OccupancyGrid> getMap(std::string frame_id);
+    void setDebug(bool debug){ _debug = debug; }
 
    protected:
+    void update_cell(double x, double y, int8_t value);
+    void update_map();
+    void postprocess();
+
     static constexpr int kUnknown = -1;
     static constexpr int kMax = 100;
+    bool _debug;
+    std::string _name;
     int _cells_x, _cells_y;
     int8_t _coeff_block, _coeff_unblock;
     double _resolution;
     double _preview;
+    std::vector<std::shared_ptr<MapPostprocessing>> _postprocessing;
 
     std::pair<int, int> _odom_cells;
     Pose _p_0, _odom, _center;
-
-    void update_cell(double x, double y, int8_t value);
-    void update_map();
 
     cv::Mat _map_0, _map_1;
  

@@ -5,10 +5,10 @@
 
 class MapLidar : public MapBase<sensor_msgs::LaserScan> {
        public:
-        explicit MapLidar(int8_t coeff_block, int8_t coeff_unblock, double max_dist, double clamp_deg,
+        explicit MapLidar(std::string name, int8_t coeff_block, int8_t coeff_unblock, double max_dist, double clamp_deg,
                  int cells_x, int cells_y, double resolution,
                  double preview = 10.0)
-            : MapBase<sensor_msgs::LaserScan>(coeff_block, coeff_unblock, cells_x, cells_y, resolution,
+            : MapBase<sensor_msgs::LaserScan>(name, coeff_block, coeff_unblock, cells_x, cells_y, resolution,
                   preview),
               _max_dist(max_dist), _clamp_deg(clamp_deg){};
 

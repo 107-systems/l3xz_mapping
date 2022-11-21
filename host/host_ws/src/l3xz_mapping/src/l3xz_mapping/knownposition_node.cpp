@@ -16,8 +16,9 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "knownposition");
     ros::NodeHandle nh("~");
-    map = std::make_shared<MapLidar>(100, -1, 2.5, 180.0, nh.param("pixel_x", 600), nh.param("pixel_y", 600),
+    map = std::make_shared<MapLidar>("lidar", 100, -1, 2.5, 180.0, nh.param("pixel_x", 600), nh.param("pixel_y", 600),
                                 nh.param("resolution", 0.1));
+    map->setDebug(true);
     subOdom =
         nh.subscribe(nh.param("odometry_topic", std::string("/odom_slam")), 1, callbackOdomIn);
     pubGrid =
