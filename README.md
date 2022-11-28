@@ -1,7 +1,7 @@
 <a href="https://107-systems.org/"><img align="right" src="https://raw.githubusercontent.com/107-systems/.github/main/logo/107-systems.png" width="15%"></a>
-:floppy_disk: `l3xz-mapping`
+:floppy_disk: `l3xz_mapping`
 ============================
-[![Spell Check status](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml/badge.svg)](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml)
+[![Spell Check status](https://github.com/107-systems/l3xz_mapping/actions/workflows/spell-check.yml/badge.svg)](https://github.com/107-systems/l3xz_mapping/actions/workflows/spell-check.yml)
 
 This repository includes the ROS-based explorative mapping stack of L3X-Z for Elrob 2022.
 
@@ -36,8 +36,8 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 ## Part 1 (the base station part)
 Clone the repository and go to host root:
 ~~~bash
-git@github.com:107-systems/l3xz-mapping.git
-cd l3xz-mapping/host
+git@github.com:107-systems/l3xz_mapping.git
+cd l3xz_mapping/host
 git submodule update --init
 ~~~
 Build the docker container:
@@ -62,8 +62,8 @@ sudo apt-get install ros-noetic-realsense2-camera chrony
 ~~~
 Clone the repository and go to client root:
 ~~~bash
-git@github.com:107-systems/l3xz-mapping.git
-cd l3xz-mapping/client
+git@github.com:107-systems/l3xz_mapping.git
+cd l3xz_mapping/client
 git submodule update --init
 ~~~
 Edit the following files according to Your setup:
