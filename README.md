@@ -36,9 +36,8 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 ## Part 1 (the base station part)
 Clone the repository and go to host root:
 ~~~bash
-git@github.com:107-systems/l3xz_mapping.git
+git clone --recursive https://github.com/107-systems/l3xz_mapping
 cd l3xz_mapping/host
-git submodule update --init
 ~~~
 Build the docker container:
 ~~~bash
@@ -64,7 +63,6 @@ Clone the repository and go to client root:
 ~~~bash
 git@github.com:107-systems/l3xz_mapping.git
 cd l3xz_mapping/client
-git submodule update --init
 ~~~
 Edit the following files according to Your setup:
 * master_ip.conf: IP of base station
@@ -143,4 +141,3 @@ Records waypoints according to Elrob log format with Unix timestamp and WSG84 co
 | `artifacts` | [] | List of artifact images |
 | `track_publishing_rate` | 1 | Period for publishing track rate |
 | `publish_track` | `true` | Enable publishing of track |
-
