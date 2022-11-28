@@ -1,9 +1,9 @@
 <a href="https://107-systems.org/"><img align="right" src="https://raw.githubusercontent.com/107-systems/.github/main/logo/107-systems.png" width="15%"></a>
-:floppy_disk: `l3xz-mapping`
+:floppy_disk: `l3xz_mapping`
 ============================
-[![Spell Check status](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml/badge.svg)](https://github.com/107-systems/l3xz-mapping/actions/workflows/spell-check.yml)
+[![Spell Check status](https://github.com/107-systems/l3xz_mapping/actions/workflows/spell-check.yml/badge.svg)](https://github.com/107-systems/l3xz_mapping/actions/workflows/spell-check.yml)
 
-This repository includes the ROS-based explorative mapping stack of L3X-Z for Elrob 2022.
+This repository includes the ROS-based explorative mapping stack of L3X-Z for ELROB 2022.
 
 The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs on a base station, does the mapping using RTAB-Map, data logging and comes with a browser frontend. Part two can be deployed to the Raspberry Pi on the robot. It's purpose is to read all the sensor data and transmit it to part one. 
 
@@ -36,9 +36,8 @@ The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs
 ## Part 1 (the base station part)
 Clone the repository and go to host root:
 ~~~bash
-git@github.com:107-systems/l3xz-mapping.git
-cd l3xz-mapping/host
-git submodule update --init
+git clone --recursive https://github.com/107-systems/l3xz_mapping
+cd l3xz_mapping/host
 ~~~
 Build the docker container:
 ~~~bash
@@ -62,9 +61,8 @@ sudo apt-get install ros-noetic-realsense2-camera chrony
 ~~~
 Clone the repository and go to client root:
 ~~~bash
-git@github.com:107-systems/l3xz-mapping.git
-cd l3xz-mapping/client
-git submodule update --init
+git@github.com:107-systems/l3xz_mapping.git
+cd l3xz_mapping/client
 ~~~
 Edit the following files according to Your setup:
 * master_ip.conf: IP of base station
@@ -105,7 +103,7 @@ Creates an odometry message from tf data.
 
 ### plotter
 
-Plots robot track and OPIs according to Elrob rules into a map. The input map can be an image or data from a topic of type `nav_msgs/OccupancyGrid`. The OPIs to be plotted and the robot track are subscribed from a topic of type `l3xz_mapping/Track`.
+Plots robot track and OPIs according to ELROB rules into a map. The input map can be an image or data from a topic of type `nav_msgs/OccupancyGrid`. The OPIs to be plotted and the robot track are subscribed from a topic of type `l3xz_mapping/Track`.
 
 #### Parameters
 | Name | Default | Description |
@@ -122,7 +120,7 @@ Plots robot track and OPIs according to Elrob rules into a map. The input map ca
 
 ### recorder
 
-Records waypoints according to Elrob log format with Unix timestamp and WSG84 coordinates with images of the artifacts. Also a track containing all waypoints can be published (e.g. for plotting). All the logs are based on an initial startpoint.
+Records waypoints according to ELROB log format with Unix timestamp and WSG84 coordinates with images of the artifacts. Also a track containing all waypoints can be published (e.g. for plotting). All the logs are based on an initial startpoint.
 
 #### Service clients
 
@@ -143,4 +141,3 @@ Records waypoints according to Elrob log format with Unix timestamp and WSG84 co
 | `artifacts` | [] | List of artifact images |
 | `track_publishing_rate` | 1 | Period for publishing track rate |
 | `publish_track` | `true` | Enable publishing of track |
-
