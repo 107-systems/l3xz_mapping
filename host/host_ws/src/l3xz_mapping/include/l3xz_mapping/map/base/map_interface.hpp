@@ -41,20 +41,22 @@ public:
     void update_map();
     void postprocess();
     void wait_tf();
-        
+
     static constexpr int kUnknown = -1;
     static constexpr int kMax = 100;
+    static constexpr double kOutOfRange = 0.75;
     bool _debug;
     std::string _name;
     int _cells_x, _cells_y;
     int8_t _coeff_block, _coeff_unblock;
     double _resolution;
     double _preview;
+    double _out_of_range_threshold;
     std::vector<std::shared_ptr<MapPostprocessing>> _postprocessing;
 
     std::string _tf_child, _tf_parent;
     std::pair<int, int> _odom_cells;
-    Pose _p_0, _odom, _center;
+    Pose _p_0, _odom, _center, _tf_offset;
 
     cv::Mat _map_0, _map_1;
  
@@ -64,6 +66,5 @@ public:
     std::mutex _mu;
 
     PoseLookup _tf_listener;
-    Pose _tf_offset;
 };
 #endif

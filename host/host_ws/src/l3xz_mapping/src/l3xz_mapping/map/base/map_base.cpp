@@ -49,6 +49,7 @@ void MapBase<T>::worker()
             }
             std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
+        update_map();
         _mu.unlock();
     }
 }

@@ -1,6 +1,5 @@
 # TODO
 
-* Copy when out of range using framebuffer
 * Overlay map generation
 * Benchmark and optimize with openmp
 

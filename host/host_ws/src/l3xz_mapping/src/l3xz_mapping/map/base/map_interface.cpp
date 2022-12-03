@@ -86,7 +86,7 @@ void MapInterface::setOdometry(const nav_msgs::Odometry &msg)
 
 void MapInterface::update_map()
 {
-    static double offset_max = std::min(_cells_x * _resolution * 0.5, _cells_y * _resolution * 0.5);
+    static double offset_max = kOutOfRange * std::min(_cells_x * _resolution * 0.5, _cells_y * _resolution * 0.5);
     if (offset_max < _center.dist2D(_odom) + _preview)
     {
         std::shared_ptr<cv::Mat> new_map;
