@@ -1,8 +1,9 @@
 #include <l3xz_mapping/map/base/map_interface.hpp>
+#include <sys/wait.h>
 
 MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock,
                            int cells_x, int cells_y, double resolution,
-                           double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing)
+                           double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, std::string tf_parent, std::string tf_child)
     : _name(name),
       _coeff_block(coeff_block),
       _coeff_unblock(coeff_unblock),
@@ -11,6 +12,8 @@ MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_un
       _resolution(resolution),
       _preview(preview),
       _postprocessing(postprocessing),
+      _tf_parent(tf_parent),
+      _tf_child(tf_child),
       _current_map_idx(0),
       _debug(false)
 {
@@ -37,6 +40,7 @@ void MapInterface::update_cell(double x, double y, int8_t value)
     pivot.x += _odom.x;
     pivot.y += _odom.y;
     pivot.yaw = _odom.yaw;
+    pivot += _tf_offset;
     double s = sin(pivot.yaw - 0.5 * M_PI);
     double c = cos(pivot.yaw - 0.5 * M_PI);
 
@@ -165,4 +169,14 @@ std::shared_ptr<nav_msgs::OccupancyGrid> MapInterface::getMap(std::string frame_
     grid.info.map_load_time = ros::Time::now();
 
     return std::make_shared<nav_msgs::OccupancyGrid>(grid);
+}
+
+void MapInterface::wait_tf()
+{
+    static bool found = false;
+    if(!found)
+    {
+      _tf_offset = _tf_listener.waitForIt(_tf_parent, _tf_child);
+      found = true;
+    }
 }

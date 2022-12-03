@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include <l3xz_mapping/pose.hpp>
+#include <l3xz_mapping/tflistener.hpp>
 #include <l3xz_mapping/map/base/map_postprocessing.hpp>
 #include <mutex>
 #include <queue>
@@ -23,7 +24,7 @@ class MapInterface
 {
 public:
     MapInterface(){}
-    MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing);
+    MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, std::string tf_parent, std::string tf_child);
     virtual ~MapInterface() = default;
     MapInterface(const MapInterface&) = delete;
     MapInterface(MapInterface&&) = delete;
@@ -39,7 +40,8 @@ public:
     void update_cell(double x, double y, int8_t value);
     void update_map();
     void postprocess();
-
+    void wait_tf();
+        
     static constexpr int kUnknown = -1;
     static constexpr int kMax = 100;
     bool _debug;
@@ -50,6 +52,7 @@ public:
     double _preview;
     std::vector<std::shared_ptr<MapPostprocessing>> _postprocessing;
 
+    std::string _tf_child, _tf_parent;
     std::pair<int, int> _odom_cells;
     Pose _p_0, _odom, _center;
 
@@ -59,5 +62,8 @@ public:
     int _current_map_idx;
     
     std::mutex _mu;
+
+    PoseLookup _tf_listener;
+    Pose _tf_offset;
 };
 #endif

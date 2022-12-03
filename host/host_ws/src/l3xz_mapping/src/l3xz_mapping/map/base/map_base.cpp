@@ -1,8 +1,8 @@
 #include <l3xz_mapping/map/base/map_base.hpp>
 
 template <class T>
-MapBase<T>::MapBase(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, int queue_size)
-    : MapInterface(name, coeff_block, coeff_unblock, cells_x, cells_y, resolution, preview, postprocessing),
+MapBase<T>::MapBase(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, std::string tf_parent, std::string tf_child, int queue_size)
+    : MapInterface(name, coeff_block, coeff_unblock, cells_x, cells_y, resolution, preview, postprocessing, tf_parent, tf_child),
       _queue_size(queue_size), _running(true)
 {
     _thread = std::thread(&MapBase::worker, this);
