@@ -9,7 +9,8 @@ template<class T>
 class MapBase : public MapInterface
 {
        public:
-        explicit MapBase(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview = 10.0, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing = std::vector<std::shared_ptr<MapPostprocessing>>(), std::string tf_parent = "", std::string tf_child = "", int queue_size = 10); virtual ~MapBase();
+        explicit MapBase(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x, int cells_y, double resolution, double preview = 10.0, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing = std::vector<std::shared_ptr<MapPostprocessing>>(), std::string tf_parent = "", std::string tf_child = "", int queue_size = 10); 
+        virtual ~MapBase();
         MapBase(const MapBase&) = delete;
         MapBase(MapBase&&) = delete;
         MapBase& operator=(const MapBase&) = delete;

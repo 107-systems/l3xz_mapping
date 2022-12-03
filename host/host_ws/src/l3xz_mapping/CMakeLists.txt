@@ -8,6 +8,7 @@ set(SOURCELIST
   src/${PROJECT_NAME}/tflistener.cpp
   src/${PROJECT_NAME}/map/base/map_base.cpp
   src/${PROJECT_NAME}/map/base/map_interface.cpp
+  src/${PROJECT_NAME}/map/map_overlay.cpp
 )
 
 add_definitions(-std=c++17 -Wall -g)
