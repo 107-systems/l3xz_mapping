@@ -48,7 +48,6 @@ void MapBase<T>::worker()
                 ROS_WARN("%s POSTPROCESSING, %03fs", _name.c_str(), timer.getSeconds());
             }
         }
-        update_map();
         _mu.unlock();
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
