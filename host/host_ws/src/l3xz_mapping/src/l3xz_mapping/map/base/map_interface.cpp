@@ -16,6 +16,7 @@ MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_un
       _tf_child(tf_child),
       _output_frame(output_frame),
       _current_map_idx(0),
+      _reliability_coeff(1.0),
       _debug(false)
 {
         _map_0 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
