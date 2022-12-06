@@ -7,24 +7,22 @@ ros::Publisher pubGrid;
 
 void callbackOdomIn(const nav_msgs::Odometry &msg) { map->setOdometry(msg); }
 
-void callbackLidarIn(const sensor_msgs::LaserScanConstPtr msg)
-{
-    map->add(*msg);
-}
+void callbackLidarIn(const sensor_msgs::LaserScanConstPtr msg) { map->add(*msg); }
 
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "knownposition");
     ros::NodeHandle nh("~");
-    map = std::make_shared<MapLidar>("lidar", 100, -1, 2.5, 180.0, nh.param("pixel_x", 600), nh.param("pixel_y", 600),
-                                nh.param("resolution", 0.1));
+    map = std::make_shared<MapLidar>("lidar", 100, -1, 2.5, 180.0, nh.param("pixel_x", 600),
+                                     nh.param("pixel_y", 600), nh.param("resolution", 0.1));
     map->setDebug(true);
     subOdom =
         nh.subscribe(nh.param("odometry_topic", std::string("/odom_slam")), 1, callbackOdomIn);
     pubGrid =
         nh.advertise<nav_msgs::OccupancyGrid>(nh.param("grid_topic", std::string("/grid")), 1);
 
-    std::string lidars = nh.param("lidar_sources", std::string("/road_detector/road_lidar, 100, -1, 2.5"));
+    std::string lidars =
+        nh.param("lidar_sources", std::string("/road_detector/road_lidar, 100, -1, 2.5"));
     lidars.erase(std::remove(lidars.begin(), lidars.end(), ' '), lidars.cend());
     lidars.erase(std::remove(lidars.begin(), lidars.end(), '\n'), lidars.cend());
     std::vector<std::string> configs;
@@ -57,7 +55,7 @@ int main(int argc, char **argv)
             cv::imshow("map", map->getMat());
             cv::waitKey(10);
         }
-        pubGrid.publish(*map->getMap("map"));
+        pubGrid.publish(*map->getMap());
         ros::spinOnce();
         r.sleep();
     }

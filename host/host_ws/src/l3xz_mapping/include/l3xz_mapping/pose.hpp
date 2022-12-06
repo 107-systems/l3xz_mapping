@@ -26,6 +26,8 @@ public:
    * @param p Second pose
    **/
  Pose operator+(const Pose& p);
+ 
+ bool operator==(const Pose& p);
 
  /** 
   * @brief Add positions concerning position and orientation

@@ -3,7 +3,7 @@
 
 MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock,
                            int cells_x, int cells_y, double resolution,
-                           double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, std::string tf_parent, std::string tf_child)
+                           double preview, std::vector<std::shared_ptr<MapPostprocessing>> postprocessing, std::string tf_parent, std::string tf_child, std::string output_frame)
     : _name(name),
       _coeff_block(coeff_block),
       _coeff_unblock(coeff_unblock),
@@ -14,15 +14,16 @@ MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_un
       _postprocessing(postprocessing),
       _tf_parent(tf_parent),
       _tf_child(tf_child),
+      _output_frame(output_frame),
       _current_map_idx(0),
       _debug(false)
 {
         _map_0 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
         _map_1 = cv::Mat(_cells_x, _cells_y, CV_8UC1);
         _map = std::make_shared<cv::Mat>(_map_0);
-        for (int y = 0; y < _map->cols; y++) 
+        for (int y = 0; y < _map->rows; y++) 
         {
-                for (int x = 0; x < _map->rows; x++) 
+                for (int x = 0; x < _map->cols; x++) 
                 {
                         _map->at<int8_t>(y, x) = kUnknown;
                 }
@@ -142,14 +143,14 @@ void MapInterface::postprocess()
     }
 }
 
-std::shared_ptr<nav_msgs::OccupancyGrid> MapInterface::getMap(std::string frame_id)
+std::shared_ptr<nav_msgs::OccupancyGrid> MapInterface::getMap()
 {
     static uint32_t seq = 0;
     nav_msgs::OccupancyGrid grid;
     std::lock_guard<std::mutex> lock(_mu);
     grid.header.seq = seq;
     grid.header.stamp = ros::Time::now();
-    grid.header.frame_id = frame_id;
+    grid.header.frame_id = _output_frame;
 
     grid.info.resolution = _resolution;
     grid.info.width = _cells_x;
