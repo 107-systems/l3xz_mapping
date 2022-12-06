@@ -2,9 +2,9 @@
 <package format="2">
   <name>l3xz_mapping</name>
   <version>0.0.0</version>
-  <description>The map package</description>
-  <maintainer email="lois@todo.todo">lois</maintainer>
-  <license>TODO</license>
+  <description>l3xz mapping package</description>
+  <maintainer email="jonaswuehrmaintainer@gmail.com">Jonas Wuehr</maintainer>
+  <license>MIT</license>
   <buildtool_depend>catkin</buildtool_depend>
   
   <build_depend>nav_msgs</build_depend>
