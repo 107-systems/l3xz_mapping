@@ -106,19 +106,19 @@ Records waypoints according to ELROB log format with Unix timestamp and WSG84 co
 For some tasks a complete map of an area is not desired. Therefore, it is a good idea to use a robust mapping from known position approach instead of SLAM to observe the area around the robot to master autonomous navigation tasks. This node demonstrates this approach using the data of one 2D-Lidar. All features of the implemented algorithms, e.g. overlaying multiple datasets, image postprocessing or transforming using tf are not demonstrated yet.
 
 <p align="center">
-    <img src="doc/knownposition.png">
+    <img src="doc/img/knownposition.png">
 </p>
 
 #### Subscribed Topipcs
 | Default Name | Type |
 |:-:|:-:|
-| `/lidar` | [`Input lidar data`] |
-| `/odom` | [`Odometry data`] |
+| `/lidar` | [`sensor_msgs/Odometry`](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html) |
+| `/odom` | [`nav_msgs/Odometry`](https://docs.ros.org/en/noetic/api/nav_msgs/html/msg/Odometry.html) |
 
 #### Published Topipcs
 | Default Name | Type |
 |:-:|:-:|
-| `/grid` | [`Occupancy grid map`] |
+| `/grid` | [`nav_msgs/OccupancyGrid`](http://docs.ros.org/en/noetic/api/nav_msgs/html/msg/OccupancyGrid.html) |
 
 #### Parameters
 | Name | Default | Description |
