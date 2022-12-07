@@ -1,5 +1,4 @@
 #include <l3xz_mapping/map/base/map_interface.hpp>
-#include <sys/wait.h>
 
 MapInterface::MapInterface(std::string name, int8_t coeff_block, int8_t coeff_unblock, int cells_x,
                            int cells_y, double resolution, double preview,

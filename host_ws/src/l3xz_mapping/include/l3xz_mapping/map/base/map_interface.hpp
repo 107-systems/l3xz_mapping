@@ -2,23 +2,26 @@
 #define MAP_INTERFACE_HPP
 
 #include <math.h>
+#include <stdint.h>
+#include <sys/wait.h>
+#include <chrono>
+#include <mutex>
+#include <queue>
+#include <string>
+#include <thread>
+
 #include <nav_msgs/OccupancyGrid.h>
 #include <nav_msgs/Odometry.h>
 #include <ros/ros.h>
-#include <stdint.h>
 
-#include <chrono>
 #include <l3xz_mapping/map/base/map_postprocessing.hpp>
 #include <l3xz_mapping/pose.hpp>
 #include <l3xz_mapping/tflistener.hpp>
-#include <mutex>
+
 #include <opencv4/opencv2/core/types.hpp>
 #include <opencv4/opencv2/highgui/highgui.hpp>
 #include <opencv4/opencv2/imgproc.hpp>
 #include <opencv4/opencv2/imgproc/imgproc.hpp>
-#include <queue>
-#include <string>
-#include <thread>
 
 class MapInterface
 {
