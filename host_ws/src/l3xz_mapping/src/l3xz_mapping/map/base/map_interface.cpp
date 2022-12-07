@@ -50,7 +50,7 @@ void MapInterface::update_cell(double x, double y, int8_t value)
         {
             current = kMax / 2;
         }
-        if (value > 0 && current < 100)
+        if (value > 0 && current < kMax)
         {
             _map->at<int8_t>(yy, xx) = static_cast<int8_t>(current + value);
         }
