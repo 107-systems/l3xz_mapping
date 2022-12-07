@@ -34,7 +34,7 @@ roslaunch l3xz_mapping l3xz_mapping.launch
 ### Known-position approach
 ~~~
 roslaunch l3xz_mapping knownposition_lidar.launch
-~~
+~~~
 
 ### Data logging
 roslaunch odom_recorder.launch
