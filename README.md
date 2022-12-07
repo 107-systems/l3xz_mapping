@@ -5,79 +5,38 @@
 
 This repository includes the ROS-based explorative mapping stack of L3X-Z for ELROB 2022.
 
-The stack consists of two parts tested under ROS1 Noetic Ninjemys. Part one runs on a base station, does the mapping using RTAB-Map, data logging and comes with a browser frontend. Part two can be deployed to the Raspberry Pi on the robot. It's purpose is to read all the sensor data and transmit it to part one. 
+The stack is tested under ROS1 Noetic Ninjemys. It can do mapping using [RTAB-Map](https://github.com/introlab/rtabmap_ros) and a [simple known-position approach](http://ais.informatik.uni-freiburg.de/teaching/ss12/robotics/slides/ss10/08-occupancy-mapping.pdf). Also data logging is possible.
 
 <p align="center">
   <a href="https://github.com/107-systems/l3xz"><img src="https://raw.githubusercontent.com/107-systems/.github/main/logo/l3xz-logo-memento-mori-github.png" width="40%"></a>
 </p>
 
-# Overview
-```
-.
-├── client (client part => deploy this on Your robot)
-│   └── client_ws (catkin workspace)
-│       └── src
-│           ├── l3xz_mapping
-│           │   └── launch
-├── doc
-│   └── img
-└── host (host part => deploy this on Your base station)
-    └── host_ws (catkin_workspace)
-        └── src
-            ├── l3xz_mapping (mapping core)
-            │   ├── launch
-            │   ├── msg
-            │   ├── scripts
-            │   └── srv
-```              
-
-# Setup
-
-## Part 1 (the base station part)
+# Installation
 Clone the repository and go to host root:
 ~~~bash
 git clone --recursive https://github.com/107-systems/l3xz_mapping
-cd l3xz_mapping/host
+cd l3xz_mapping/host_ws
 ~~~
-Build the docker container:
-~~~bash
-sudo ./build_docker.sh
-~~~
-Edit the following files according to Your setup:
-* master_ip.conf: IP of base station
-* client_ip.conf: IP of robot
-* logdrive.conf: Root path of logging directory
 
-Start the docker container:
+Build using catkin:
 ~~~bash
-sudo ./start_docker.sh
+catkin_make install
 ~~~
-A tmux session will appear, the software base is automatically built and executed.
 
-## Part 2 (the robot part)
-Install the Realsense ROS environment and chrony for timesync:
-~~~bash
-sudo apt-get install ros-noetic-realsense2-camera chrony
-~~~
-Clone the repository and go to client root:
-~~~bash
-git@github.com:107-systems/l3xz_mapping.git
-cd l3xz_mapping/client
-~~~
-Edit the following files according to Your setup:
-* master_ip.conf: IP of base station
-* client_ip.conf: IP of robot
-To establish a connection to the base station with the ROS master, edit the base station IP-Address in ```master_ip.conf```.
-Finally, we can start the robot part:
-~~~bash
-./start.sh
-~~~
-A tmux session will appear. After the software is built automatically, the sensor nodes will be started.
-
+There is also a [frontend](https://github.com/107-systems/l3xz_frontend) available for the mapping stack.
 ## Start mapping
-After both parts are online, the mapping can be started on the base station:
+
+### RTAB-Map
 ~~~bash
 roslaunch l3xz_mapping l3xz_mapping.launch
+~~~
+
+### Known-position approach
+~~~
+roslaunch l3xz_mapping knownposition_lidar.launch
+~~
+
+### Data logging
 roslaunch odom_recorder.launch
 roslaunch thermal_recorder.launch
 roslaunch plotter_grid.launch
