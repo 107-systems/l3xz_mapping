@@ -32,11 +32,13 @@ roslaunch l3xz_mapping l3xz_mapping.launch
 ~~~
 
 ### Known-position approach
-~~~
+~~~bash
 roslaunch l3xz_mapping knownposition_lidar.launch
 ~~~
 
 ### Data logging
+
+~~~bash
 roslaunch odom_recorder.launch
 roslaunch thermal_recorder.launch
 roslaunch plotter_grid.launch
